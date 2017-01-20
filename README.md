@@ -1,6 +1,22 @@
 SQLbro
 ==============
 
+TODOS
+• GET MY DB CREDS OUT OF SOURCE.
+• FIX RIDICULOUS STYLE guide
+• Work on ReadMe. Follow guide below; change what's needed.
+• connection dialog (since this is chrome-based, maybe use the "<dialog>" element?)
+This should create a connection on the bus. (to be added)
+• Make the schema list an accordian, default to closed.
+• make a schema "choosable" - issue a "USE schema;" command.
+• make a *table* "choosable" - issue a "select * from table" command and show results.
+• Flesh out grid component.
+• Make a query savable.
+• Make a connection savable.
+• put icons on tables/functions/procs/triggers
+• enable multi-commands (in driver)
+• add multiple DB types (sql server, mongO?)
+
 A bare bones SQL client.
 
 This was built to satisfy my own desire for an SQL client that would make those things I need to do frequently as a mid-tier developer easy - without preventing doing anything else - with a minimal interface.

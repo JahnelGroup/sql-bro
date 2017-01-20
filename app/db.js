@@ -9,16 +9,13 @@ given a connection:
 •
 */
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'devuser',
-  password: 'devu$er'
-})
+let connection
 
 export {
   getSchemas,
   getObjectsForSchema,
-  runQuery
+  runQuery,
+  makeConnnection
 }
 
 function getSchemas () {
@@ -48,4 +45,8 @@ function runQuery (query) {
       resolve(results)
     })
   })
+}
+
+function makeConnnection (connectionInfo) {
+  connection = mysql.createConnection(connectionInfo)
 }
