@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { createConnection } from './db'
 
-const bus = new Vue({
+export default new Vue({
   data: {
     connection: null
   },
@@ -11,5 +11,3 @@ const bus = new Vue({
     }
   }
 })
-console.log(bus)
-export default bus

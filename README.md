@@ -2,11 +2,10 @@ SQLbro
 ==============
 
 TODOS
-• GET MY DB CREDS OUT OF SOURCE.
 • FIX RIDICULOUS STYLE guide
 • Work on ReadMe. Follow guide below; change what's needed.
 • connection dialog (since this is chrome-based, maybe use the "<dialog>" element?)
-This should create a connection on the bus. (to be added)
+This should create a connection on the bus.
 • Make the schema list an accordian, default to closed.
 • make a schema "choosable" - issue a "USE schema;" command.
 • make a *table* "choosable" - issue a "select * from table" command and show results.
@@ -15,7 +14,8 @@ This should create a connection on the bus. (to be added)
 • Make a connection savable.
 • put icons on tables/functions/procs/triggers
 • enable multi-commands (in driver)
-• add multiple DB types (sql server, mongO?)
+• add multiple DB types (sql server, at least. mongO?)
+• Styling for days.
 
 A bare bones SQL client.
 
