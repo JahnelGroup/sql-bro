@@ -24,4 +24,7 @@ export default {
 </script>
 
 <style lang="css">
+  p{
+    color: black;
+  }
 </style>
