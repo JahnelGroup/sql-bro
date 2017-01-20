@@ -1,13 +1,14 @@
 <template>
-      <app-header></app-header>
-      <main class="flex-container horizontal">
-          <schema-list></schema-list>
-          <div class="flex-container vertical">
-            <query-pane></query-pane>
-            <results></results>
-          </div>
-      </main>
-      <app-footer></app-footer>
+  <app-header></app-header>
+  <main class="flex-container horizontal"
+      v-if="connection">
+    <schema-list></schema-list>
+    <div class="flex-container vertical">
+      <query-pane></query-pane>
+      <results></results>
+    </div>
+  </main>
+  <app-footer></app-footer>
 </template>
 
 <script>
@@ -17,6 +18,7 @@
   import SchemaList from './components/SchemaList'
   import QueryPane from './components/QueryPane'
   import Results from './components/Results'
+  import bus from './bus'
 
   export default {
     components: {
@@ -26,6 +28,12 @@
       SchemaList,
       QueryPane,
       Results
+    },
+    computed: {
+      connection () {
+        debugger
+        return bus.connection
+      }
     }
   }
 </script>
