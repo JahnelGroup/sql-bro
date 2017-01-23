@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { getObjectsForSchema } from '../db'
+import bus from '../bus'
 
 export default {
   props: ['name'],
@@ -28,7 +28,7 @@ export default {
   created () {
     let vm = this
         // populate the list of objects for this schema.
-    getObjectsForSchema(this.name)
+    bus.dbConnection.getObjectsForSchema(this.name)
       .then(function (res) {
         vm.objects = res
       })

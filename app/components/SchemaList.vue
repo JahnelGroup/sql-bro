@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { getSchemas } from '../db'
+import bus from '../bus'
 import Schema from './Schema'
 
 export default {
@@ -25,7 +25,7 @@ export default {
   },
   created () {
     let vm = this
-    getSchemas()
+    bus.dbConnection.getSchemas()
       .then(function (res) {
         vm.schemas = res
       })
