@@ -1,5 +1,4 @@
 import mysql from 'mysql'
-import bus from './bus.js'
 
 /*
 target API: what does we need?
@@ -9,8 +8,9 @@ given a connection:
 • issue a Query
 •
 */
+let connection
 
-export {
+export default {
   getSchemas,
   getObjectsForSchema,
   runQuery,
@@ -19,7 +19,7 @@ export {
 
 function getSchemas () {
   return new Promise(function (resolve, reject) {
-    bus.connection.query('SHOW DATABASES', function (error, results, fields) {
+    connection.query('SHOW DATABASES', function (error, results, fields) {
       if (error) reject(error)
       resolve(results.map(db => db.Database))
     })
@@ -30,7 +30,7 @@ function getSchemas () {
 // Should actually query some complicated thing out of information_schema
 function getObjectsForSchema (schema) {
   return new Promise(function (resolve, reject) {
-    bus.connection.query(`SHOW FULL TABLES IN ${schema}`, function (error, results, fields) {
+    connection.query(`SHOW FULL TABLES IN ${schema}`, function (error, results, fields) {
       if (error) reject(error)
       resolve(results.map(t => t[`Tables_in_${schema}`]))
     })
@@ -39,7 +39,7 @@ function getObjectsForSchema (schema) {
 
 function runQuery (query) {
   return new Promise(function (resolve, reject) {
-    bus.connection.query(query, function (error, results, fields) {
+    connection.query(query, function (error, results, fields) {
       if (error) reject(error)
       resolve(results)
     })
@@ -47,5 +47,5 @@ function runQuery (query) {
 }
 
 function createConnection (connectionInfo) {
-  return mysql.createConnection(connectionInfo)
+  connection = mysql.createConnection(connectionInfo)
 }

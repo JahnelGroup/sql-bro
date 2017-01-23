@@ -1,4 +1,5 @@
 <template>
+  <connection-dialog></connection-dialog>
   <app-header></app-header>
   <main class="flex-container horizontal"
       v-if="connection">
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+  import ConnectionDialog from './components/ConnectionDialog'
   import Footer from './components/Footer'
   import Hello from './components/Hello'
   import Header from './components/Header'
@@ -23,6 +25,7 @@
   export default {
     components: {
       appFooter: Footer,
+      ConnectionDialog,
       Hello,
       appHeader: Header,
       SchemaList,
@@ -31,8 +34,7 @@
     },
     computed: {
       connection () {
-        debugger
-        return bus.connection
+        return bus.dbConnection
       }
     }
   }

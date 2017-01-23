@@ -1,13 +1,14 @@
 import Vue from 'vue'
-import { createConnection } from './db'
+import db from './db'
 
 export default new Vue({
   data: {
-    connection: null
+    dbConnection: null
   },
   methods: {
     setConnection (con) {
-      this.connection = createConnection(con)
+      db.createConnection(con)
+      this.dbConnection = db
     }
   }
 })

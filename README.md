@@ -4,8 +4,7 @@ SQLbro
 TODOS
 • FIX RIDICULOUS STYLE guide
 • Work on ReadMe. Follow guide below; change what's needed.
-• connection dialog (since this is chrome-based, maybe use the "<dialog>" element?)
-This should create a connection on the bus.
+• connection dialog  - make sure the connection *happens* before closing and moving on.
 • Make the schema list an accordian, default to closed.
 • make a schema "choosable" - issue a "USE schema;" command.
 • make a *table* "choosable" - issue a "select * from table" command and show results.
