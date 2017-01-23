@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { runQuery } from '../db'
+import dbConnection from '../db'
 
 export default {
   data: function () {
@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     executeQuery () {
-      runQuery(this.query)
+      dbConnection.runQuery(this.query)
         .then(function (res) {
           console.log(res)
         })

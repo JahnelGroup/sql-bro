@@ -58,4 +58,7 @@ export default {
 </script>
 
 <style lang="css">
+textarea {
+    height: 150px;
+}
 </style>

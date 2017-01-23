@@ -41,7 +41,22 @@ function runQuery (query) {
   return new Promise(function (resolve, reject) {
     connection.query(query, function (error, results, fields) {
       if (error) reject(error)
-      resolve(results)
+
+      let returnVal
+      if (results.constructor.name === 'OkPacket') {
+        returnVal = results
+        returnVal.type = 'ok'
+      } else {
+        let type = 'table'
+        let headers = fields.map(f => f.name)
+        let rows = results.map(r => headers.map(name => r[name]))
+        returnVal = {
+          type,
+          headers,
+          rows
+        }
+      }
+      resolve(returnVal)
     })
   })
 }
