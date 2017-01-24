@@ -8,13 +8,15 @@ TODOS
 • Make the schema list an accordian, default to closed.
 • make a schema "choosable" - issue a "USE schema;" command.
 • make a *table* "choosable" - issue a "select * from table" command and show results.
-• Flesh out grid component.
+• Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
+• Show other "objects" under schemas: functions, procs, view, triggers, with good icons.
 • Make a query savable.
 • Make a connection savable.
 • put icons on tables/functions/procs/triggers
 • enable multi-commands (in driver)
 • add multiple DB types (sql server, at least. mongO?)
 • Styling for days.
+• Add Tests for days.
 
 A bare bones SQL client.
 

@@ -3,10 +3,10 @@
   <app-header></app-header>
   <main class="flex-container horizontal"
       v-if="connection">
-    <schema-list></schema-list>
+    <schema-list class="frame"></schema-list>
     <div class="flex-container vertical">
-      <query-pane></query-pane>
-      <results></results>
+      <query-pane class="frame"></query-pane>
+      <results class="frame"></results>
     </div>
   </main>
   <app-footer></app-footer>
@@ -67,7 +67,7 @@
 
   .flex-container {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;;
       flex: 1;
   }
   .vertical {
@@ -75,5 +75,16 @@
   }
   .horizontal {
       flex-direction: row;
+  }
+
+  .frame {
+    border: 1px solid grey;
+    border-radius: .5em;
+    margin: .5em;
+    padding: .5em;
+    overflow: auto;
+  }
+  .frame::-webkit-scrollbar {
+    border-radius: .5em;
   }
 </style>

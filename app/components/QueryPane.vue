@@ -1,11 +1,14 @@
 <template lang="html">
-  <textarea v-model="query"></textarea>
-  <button type="button" @click="executeQuery">Run</button>
+    <div class="">
+          <textarea v-model="query"></textarea>
+          <button type="button" @click="executeQuery">Run</button>
+    </div>
+
 </template>
 
 <script>
 import dbConnection from '../db'
-
+import bus from '../bus'
 export default {
   data: function () {
     return {
@@ -15,9 +18,7 @@ export default {
   methods: {
     executeQuery () {
       dbConnection.runQuery(this.query)
-        .then(function (res) {
-          console.log(res)
-        })
+        .then(bus.setCurrentResults)
     }
   }
 }

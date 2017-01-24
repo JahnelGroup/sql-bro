@@ -45,9 +45,9 @@ function runQuery (query) {
       let returnVal
       if (results.constructor.name === 'OkPacket') {
         returnVal = results
-        returnVal.type = 'ok'
+        returnVal.type = 'result-status'
       } else {
-        let type = 'table'
+        let type = 'result-table'
         let headers = fields.map(f => f.name)
         let rows = results.map(r => headers.map(name => r[name]))
         returnVal = {
