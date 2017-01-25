@@ -1,6 +1,9 @@
 <template lang="html">
     <div class="">
-        <p>export as csv, json, sql insert</p>
+        <div>
+          export as csv, json, sql insert
+          <button class="clearResultsBtn" @click="clearResults()">Clear Results</button>
+        </div>
         <component :is="results.type" :result="results"></component>
         <p>Next/Prev buttons (if limit)</p>
     </div>
@@ -20,9 +23,17 @@ export default {
     results () {
       return bus.currentResults
     }
+  },
+  methods: {
+    clearResults: () => {
+      bus.setCurrentResults('')
+    }
   }
 }
 </script>
 
 <style lang="css">
+  .clearResultsBtn{
+    float: right;
+  }
 </style>

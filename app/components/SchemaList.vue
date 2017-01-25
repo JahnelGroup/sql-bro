@@ -3,8 +3,11 @@
       <h4>Schemas</h4>
       <nav>
           <section v-for="schema in schemas">
-              <h5>{{ schema }}</h5>
-              <schema :name="schema"></schema>
+            <div class="schemaNameGroup">
+              <span class="schemaName">{{ schema }}</span>
+              <button class="useSchemaBtn"@click="useSchema(schema)">USE schema</button>
+            </div>
+            <schema :name="schema"></schema>
           </section>
       </nav>
   </aside>
@@ -12,6 +15,7 @@
 
 <script>
 import bus from '../bus'
+import dbConnection from '../db'
 import Schema from './Schema'
 
 export default {
@@ -29,6 +33,12 @@ export default {
       .then(function (res) {
         vm.schemas = res
       })
+  },
+  methods: {
+    useSchema: (schema) => {
+      dbConnection.runQuery('use ' + schema + ';')
+        .then(bus.setCurrentResults)
+    }
   }
 }
 </script>
@@ -36,5 +46,18 @@ export default {
 <style lang="css" scoped>
 aside {
     overflow-y: scroll;
+}
+
+.schemaNameGroup{
+  margin-bottom: 15px;
+}
+
+.schemaName{
+  width: auto;
+  font-weight: bold;
+}
+
+.useSchemaBtn{
+  float: right;
 }
 </style>

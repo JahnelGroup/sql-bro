@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  // import 'font-awesome/css/font-awesome.min.css'
   import ConnectionDialog from './components/ConnectionDialog'
   import Footer from './components/Footer'
   import Hello from './components/Hello'

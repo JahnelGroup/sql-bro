@@ -5,8 +5,9 @@ TODOS
 • FIX RIDICULOUS STYLE guide
 • Work on ReadMe. Follow guide below; change what's needed.
 • connection dialog  - make sure the connection *happens* before closing and moving on.
+• Finish implementing font-awesome
+• Add the ability to destroy connection
 • Make the schema list an accordian, default to closed.
-• make a schema "choosable" - issue a "USE schema;" command.
 • make a *table* "choosable" - issue a "select * from table" command and show results.
 • Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
 • Show other "objects" under schemas: functions, procs, view, triggers, with good icons.
