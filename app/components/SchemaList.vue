@@ -4,7 +4,10 @@
       <nav>
           <section v-for="schema in schemas">
             <div class="schemaNameGroup">
-              <span class="schemaName">{{ schema }}</span>
+              <span class="schemaName">
+              <i class="fa fa-database" aria-hidden="true"></i>
+              {{ schema }}
+              </span>
               <button class="useSchemaBtn"@click="useSchema(schema)">USE schema</button>
             </div>
             <schema :name="schema"></schema>
