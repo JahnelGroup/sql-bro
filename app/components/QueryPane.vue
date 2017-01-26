@@ -25,7 +25,8 @@ export default {
 </script>
 
 <style lang="css">
-  p{
-    color: black;
+  textarea {
+      font-family: monospace;
+      width: 100%;
   }
 </style>

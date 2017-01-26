@@ -9,6 +9,9 @@
       <results class="frame"></results>
     </div>
   </main>
+  <main v-else>
+    <connection-list></connection-list>
+  </main>
   <app-footer></app-footer>
 </template>
 
@@ -49,6 +52,13 @@
     height: 100%;
     width: 100%;
     position: absolute;
+
+    --frame-color: grey;
+    --scrollbar-thumb-color: #21BB9A;
+    --scrollbar-background: #CCF6ED;
+
+    --curve-size: .5em;
+
   }
 
   body {
@@ -56,6 +66,10 @@
     padding: 0;
     height: 100%;
     width: 100%;
+    font-family: 'BlinkMacSystemFont', 'Lucida Grande',
+            'Segoe UI', Ubuntu, Cantarell, sans-serif;
+    font-weight: normal;
+    font-size: 12px;
   }
   /*#app {
     max-width: 600px;
@@ -79,13 +93,24 @@
   }
 
   .frame {
-    border: 1px solid grey;
-    border-radius: .5em;
+    border: 1px solid var(--frame-color);
+    border-radius: var(--curve-size);
     margin: .5em;
     padding: .5em;
     overflow: auto;
   }
   .frame::-webkit-scrollbar {
-    border-radius: .5em;
+    border-radius: var(--curve-size);
+  }
+  .frame::-webkit-scrollbar {
+    background: var(--scrollbar-background);
+    border-radius: var(--curve-size);
+    height: .75em;
+    width: .75em;
+  }
+
+  .frame::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: var(--curve-size);
   }
 </style>
