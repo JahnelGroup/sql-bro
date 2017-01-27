@@ -3,8 +3,8 @@
         <input type="text" v-model="filterValue">
         <ul>
             <li v-for="table in filteredList">
-              {{ table }}
-              <i class="fa fa-eye" aria-hidden="true"></i> <!-- make on hover -->
+                {{ table }}
+                <i class="fa fa-eye" aria-hidden="true" @click="viewTable(table)"></i>
             </li>
         </ul>
     </div>
@@ -13,6 +13,7 @@
 
 <script>
 import bus from '../bus'
+import dbConnection from '../db'
 
 export default {
   props: ['name'],
@@ -35,6 +36,12 @@ export default {
       .then(function (res) {
         vm.objects = res
       })
+  },
+  methods: {
+    viewTable: (table) => {
+      dbConnection.runQuery('select * from ' + table + ';')
+      .then(bus.setCurrentResults)
+    }
   }
 }
 </script>
@@ -55,5 +62,14 @@ li:before {
   display: inline-block;
   margin-left: -1.3em; /* same as padding-left set on li */
   width: 1.3em; /* same as padding-left set on li */
+}
+
+.fa-eye{
+  display: none;
+}
+
+li:hover .fa-eye{
+  display: inline-block;
+  cursor: pointer;
 }
 </style>
