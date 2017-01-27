@@ -1,5 +1,4 @@
 <template>
-  <connection-dialog></connection-dialog>
   <app-header></app-header>
   <main class="flex-container horizontal"
       v-if="connection">
@@ -17,7 +16,7 @@
 
 <script>
   import 'font-awesome/css/font-awesome.min.css'
-  import ConnectionDialog from './components/ConnectionDialog'
+  import ConnectionList from './components/ConnectionList'
   import Footer from './components/Footer'
   import Hello from './components/Hello'
   import Header from './components/Header'
@@ -29,7 +28,7 @@
   export default {
     components: {
       appFooter: Footer,
-      ConnectionDialog,
+      ConnectionList,
       Hello,
       appHeader: Header,
       SchemaList,

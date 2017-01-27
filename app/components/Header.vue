@@ -1,19 +1,11 @@
 <template lang="html">
     <header>
       <div>💪SQL bro</div>
-      <button @click="openConnection">Connect</button>
     </header>
 </template>
 
 <script>
-import bus from '../bus'
-
 export default {
-  methods: {
-    openConnection () {
-      bus.$emit('openConnection')
-    }
-  }
 }
 </script>
 
