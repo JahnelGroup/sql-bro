@@ -9,10 +9,9 @@ TODOS
 • Move the passwords out of localstorage into https://github.com/atom/node-keytar.
 • Add the ability to destroy connection
 • Make the schema list an accordian, default to closed.
-• make a *table* "choosable" - issue a "select * from table" command and show results.
 • Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
 • Show other "objects" under schemas: functions, procs, view, triggers, with good icons.
-• Maybe add icon options next to the object in the schemas section (ex. get create statement, select all)
+• Add icon options next to the object in the schemas section (ex. get create statement, select all)
 • Make a query savable.
 • put icons on functions/procs/triggers using font-awesome
 • enable multi-commands (in driver)
