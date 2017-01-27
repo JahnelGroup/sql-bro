@@ -2,10 +2,10 @@ SQLbro
 ==============
 
 TODOS
-• FIX RIDICULOUS STYLE guide
 • WOOPS. We're using some pretty out-of-date packages. But updating them all will be a pill (webpack, etc!)
 • Work on ReadMe. Follow guide below; change what's needed.
 • connection dialog  - make sure the connection *happens* before closing and moving on.
+• Add "edit" to connections, and beef them up visually.
 • Move the passwords out of localstorage into https://github.com/atom/node-keytar.
 • Add the ability to destroy connection
 • Make the schema list an accordian, default to closed.
@@ -13,11 +13,20 @@ TODOS
 • Show other "objects" under schemas: functions, procs, view, triggers, with good icons.
 • Add icon options next to the object in the schemas section (ex. get create statement, select all)
 • Make a query savable.
+• Show active schema in list somehow.
 • put icons on functions/procs/triggers using font-awesome
 • enable multi-commands (in driver)
 • add multiple DB types (sql server, at least. mongO?)
 • Styling for days.
 • Add Tests for days.
+• Add flyway integration?! Show what migration you're on, and if there are others to do: clean/migrate
+• Add "error" response object.
+• Query log
+• Easter eggs?
+• Adapt grid output (dates, bools) to better representation.
+• In grid editing.
+• FIX RIDICULOUS STYLE guide
+• Put a spinner on "RUN" until it finishes.
 
 A bare bones SQL client.
 

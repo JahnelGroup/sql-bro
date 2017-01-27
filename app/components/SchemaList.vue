@@ -47,10 +47,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-aside {
-    overflow-y: scroll;
-}
-
 .schemaNameGroup{
   margin-bottom: 15px;
 }

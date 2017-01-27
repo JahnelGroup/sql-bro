@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="">
+    <div class="results">
         <div>
           export as csv, json, sql insert
           <button class="clearResultsBtn" @click="clearResults()">Clear Results</button>
@@ -35,5 +35,8 @@ export default {
 <style lang="css">
   .clearResultsBtn{
     float: right;
+  }
+  .results {
+      overflow: auto;
   }
 </style>

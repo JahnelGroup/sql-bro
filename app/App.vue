@@ -2,7 +2,7 @@
   <app-header></app-header>
   <main class="flex-container horizontal"
       v-if="connection">
-    <schema-list class="frame"></schema-list>
+    <schema-list class="frame schema-list"></schema-list>
     <div class="flex-container vertical">
       <query-pane class="frame"></query-pane>
       <results class="frame"></results>
@@ -16,6 +16,7 @@
 
 <script>
   import 'font-awesome/css/font-awesome.min.css'
+  import 'purecss/build/pure-min.css'
   import ConnectionList from './components/ConnectionList'
   import Footer from './components/Footer'
   import Hello from './components/Hello'
@@ -58,6 +59,8 @@
 
     --curve-size: .5em;
 
+    --background: #f2f2f2;
+
   }
 
   body {
@@ -69,6 +72,7 @@
             'Segoe UI', Ubuntu, Cantarell, sans-serif;
     font-weight: normal;
     font-size: 12px;
+
   }
   /*#app {
     max-width: 600px;
@@ -77,15 +81,19 @@
   }*/
   main {
       flex: 1;
+      background-color: var(--background);
   }
 
   .flex-container {
       display: flex;
       flex-wrap: nowrap;;
       flex: 1;
+      width: 100%;
+      overflow: auto;
   }
   .vertical {
       flex-direction: column;
+      flex: 1;
   }
   .horizontal {
       flex-direction: row;
@@ -97,6 +105,7 @@
     margin: .5em;
     padding: .5em;
     overflow: auto;
+    background-color: #fff;
   }
   .frame::-webkit-scrollbar {
     border-radius: var(--curve-size);
@@ -111,5 +120,11 @@
   .frame::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb-color);
     border-radius: var(--curve-size);
+  }
+
+  .schema-list {
+      min-width: 150px;
+      resize: horizontal;
+      overflow: auto;
   }
 </style>

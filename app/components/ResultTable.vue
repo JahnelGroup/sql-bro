@@ -1,5 +1,5 @@
 <template lang="html">
-  <table>
+  <table class="pure-table pure-table-bordered pure-table-striped">
     <thead>
       <tr>
         <td v-for="header in result.headers">{{ header }}</td>
@@ -20,4 +20,7 @@ export default {
 </script>
 
 <style lang="css">
+    table {
+      table-layout: fixed;
+    }
 </style>
