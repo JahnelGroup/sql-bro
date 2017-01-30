@@ -3,8 +3,9 @@
         <input type="text" v-model="filterValue">
         <ul>
             <li v-for="table in filteredList">
-                {{ table }}
                 <i class="fa fa-eye" aria-hidden="true" @click="viewTable(table)"></i>
+                <i class="fa fa-table" aria-hidden="true"></i>
+                {{ table }}
             </li>
         </ul>
     </div>
@@ -54,15 +55,23 @@ ul {
   padding: 0;
 }
 li {
+  display: block;
+  white-space: nowrap;
+}
+li .fa-table {
+  display: inline-block;
+  width: 1.3em;
+}
+/*li {
   padding-left: 1.3em;
 }
 li:before {
-  content: "\f0ce"; /* FontAwesome Unicode */
+  content: "\f0ce"; /* FontAwesome Unicode
   font-family: FontAwesome;
   display: inline-block;
-  margin-left: -1.3em; /* same as padding-left set on li */
-  width: 1.3em; /* same as padding-left set on li */
-}
+  margin-left: -1.3em; /* same as padding-left set on li
+  width: 1.3em; /* same as padding-left set on li
+}*/
 
 .fa-eye{
   display: none;
@@ -70,7 +79,11 @@ li:before {
 
 li:hover .fa-eye{
   display: inline-block;
+    width: 1.3em;
   cursor: pointer;
+}
+li:hover .fa-table {
+  display: none;
 }
 
 </style>

@@ -34,5 +34,9 @@ export default {
   textarea {
       font-family: monospace;
       width: calc(100% - var(--curve-size));
+      overflow: scroll;
+      resize: none;
+      height: calc(100% - 32px);
+      overflow-x: hidden;
   }
 </style>

@@ -6,8 +6,8 @@
         v-if="connection">
       <schema-list class="frame schema-list"></schema-list>
       <div class="flex-container vertical">
-        <query-pane class="frame"></query-pane>
-        <results class="frame"></results>
+        <query-pane class="frame query-pane"></query-pane>
+        <results class="frame results"></results>
       </div>
     </main>
     <main v-else>
@@ -129,7 +129,14 @@
 
   .schema-list {
       min-width: 150px;
+      width: 200px;
       resize: horizontal;
-      overflow: auto;
+  }
+  .query-pane {
+    min-height: 100px;
+    resize: vertical;
+  }
+  .results {
+    flex: 1;
   }
 </style>

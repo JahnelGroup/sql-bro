@@ -4,7 +4,7 @@
           export as csv, json, sql insert
           <button class="clearResultsBtn" @click="clearResults()">Clear Results</button>
         </div>
-        <component :is="results.type" :result="results"></component>
+        <component v-if="results" :is="results.type" :result="results"></component>
         <p>Next/Prev buttons (if limit)</p>
     </div>
 </template>

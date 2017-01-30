@@ -33,20 +33,18 @@ More information can be found [here](https://simulatedgreg.gitbooks.io/electron-
 
 
 TODOS
-• WOOPS. We're using some pretty out-of-date packages. But updating them all will be a pill (webpack, etc!)
 • Work on ReadMe. Follow guide below; change what's needed.
 • connection dialog  - make sure the connection *happens* before closing and moving on.
 • Add "edit" to connections, and beef them up visually.
 • Move the passwords out of localstorage into https://github.com/atom/node-keytar.
 • Add the ability to destroy connection
 • Make the schema list an accordian, default to closed.
-• make a *table* "choosable" - issue a "select * from table" command and show results.
 • Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
 • Show other "objects" under schemas: functions, procs, view, triggers, with good icons.
+• put icons on functions/procs/triggers using font-awesome
 • Maybe add icon options next to the object in the schemas section (ex. get create statement, select all)
 • Make a query savable.
 • Show active schema in list somehow.
-• put icons on functions/procs/triggers using font-awesome
 • enable multi-commands (in driver)
 • add multiple DB types (sql server, at least. mongO?)
 • Styling for days.
