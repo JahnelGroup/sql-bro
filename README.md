@@ -38,7 +38,6 @@ TODOS
 • Add "edit" to connections, and beef them up visually.
 • Move the passwords out of localstorage into https://github.com/atom/node-keytar.
 • Add the ability to destroy connection
-• Make the schema list an accordian, default to closed.
 • Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
 • Show other "objects" under schemas: functions, procs, view, triggers, with good icons.
 • put icons on functions/procs/triggers using font-awesome
@@ -56,6 +55,8 @@ TODOS
 • Adapt grid output (dates, bools) to better representation.
 • In grid editing.
 • Put a spinner on "RUN" until it finishes.
+• replace textarea with https://ace.c9.io/
+
 
 ---
 This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about this project can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).

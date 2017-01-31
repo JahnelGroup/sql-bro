@@ -4,13 +4,15 @@
       <nav>
           <section v-for="schema in schemas">
             <div class="schemaNameGroup">
-              <span class="schemaName">
+              <label class="schemaName">
+                  <input type="checkbox" class="hidden"
+                        v-model="visible" :value="schema">
               <i class="fa fa-database" aria-hidden="true"></i>
               {{ schema }}
-              </span>
+              </label>
               <button class="useSchemaBtn"@click="useSchema(schema)">USE schema</button>
             </div>
-            <schema :name="schema"></schema>
+            <schema v-if="visible.includes(schema)" :name="schema"></schema>
           </section>
       </nav>
   </aside>
@@ -27,7 +29,8 @@ export default {
   },
   data: function () {
     return {
-      schemas: []
+      schemas: [],
+      visible: []
     }
   },
   created () {
