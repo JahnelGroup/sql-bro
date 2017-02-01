@@ -2,10 +2,10 @@
     <div class="">
         <input type="text" v-model="filterValue">
         <ul>
-            <li v-for="table in filteredList">
-                <i class="fa fa-eye" aria-hidden="true" @click="viewTable(table)"></i>
-                <i class="fa fa-table" aria-hidden="true"></i>
-                {{ table }}
+            <li v-for="object in filteredList">
+                <i class="fa fa-eye" aria-hidden="true" @click="view(object)"></i>
+                <i class="fa" :class="classes[object.type]" aria-hidden="true"></i>
+                {{ object.name }}
             </li>
         </ul>
     </div>
@@ -15,19 +15,24 @@
 <script>
 import bus from '../bus'
 import dbConnection from '../db'
-
 export default {
   props: ['name'],
   data () {
     return {
       objects: [],
-      filterValue: ''
+      filterValue: '',
+      classes: {
+        table: 'fa-table',
+        view: 'fa-window-restore',
+        procedure: 'fa-file-code-o',
+        function: 'fa-code',
+      }
     }
   },
   computed: {
     filteredList () {
       return this.objects
-        .filter(o => (new RegExp(this.filterValue, 'i')).test(o))
+        .filter(o => (new RegExp(this.filterValue, 'i')).test(o.name))
     }
   },
   created () {
@@ -39,8 +44,15 @@ export default {
       })
   },
   methods: {
-    viewTable: (table) => {
-      dbConnection.runQuery('select * from ' + table + ';')
+    view  (object) {
+      this[object.view](object.name)
+    },
+    viewTable (table) {
+      dbConnection.runQuery(`SELECT * FROM ${this.name}.${table} LIMIT 100;`)
+      .then(bus.setCurrentResults)
+    },
+    viewProc (proc) {
+      dbConnection.runQuery(`SELECT ROUTINE_DEFINITION as Definition FROM information_schema.routines WHERE ROUTINE_NAME = '${proc}';`)
       .then(bus.setCurrentResults)
     }
   }
@@ -58,7 +70,7 @@ li {
   display: block;
   white-space: nowrap;
 }
-li .fa-table {
+li .fa {
   display: inline-block;
   width: 1.3em;
 }
@@ -73,7 +85,7 @@ li:before {
   width: 1.3em; /* same as padding-left set on li
 }*/
 
-.fa-eye{
+li .fa-eye{
   display: none;
 }
 
@@ -82,7 +94,7 @@ li:hover .fa-eye{
     width: 1.3em;
   cursor: pointer;
 }
-li:hover .fa-table {
+li:hover .fa-eye + .fa {
   display: none;
 }
 

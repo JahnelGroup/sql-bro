@@ -28,11 +28,30 @@ function getSchemas () {
 
 // SHOW FULL TABLES (tables/views)
 // Should actually query some complicated thing out of information_schema
+const tableTypes = {
+  'BASE TABLE': 'table',
+  'VIEW': 'view',
+  'SYSTEM VIEW': 'view',
+  'PROCEDURE': 'procedure',
+  'FUNCTION': 'function'
+}
 function getObjectsForSchema (schema) {
   return new Promise(function (resolve, reject) {
-    connection.query(`SHOW FULL TABLES IN ${schema}`, function (error, results) {
+    connection.query(
+      `select routine_name as name, routine_type as type, 'viewProc' as view
+        FROM INFORMATION_SCHEMA.routines
+        WHERE routine_schema = '${schema}'
+        UNION
+        select table_name as name, table_type as type, 'viewTable' as view
+        from information_schema.tables
+        where table_schema = '${schema}'`,
+      function (error, results) {
       if (error) reject(error)
-      resolve(results.map(t => t[`Tables_in_${schema}`]))
+      resolve(results.map(t => ({
+        name: t.name,
+        type: tableTypes[t.type],
+        view: t.view
+      })));
     })
   })
 }
@@ -61,5 +80,8 @@ function runQuery (query) {
 }
 
 function createConnection (connectionInfo) {
-  connection = mysql.createConnection(connectionInfo)
+  connection = mysql.createConnection({
+    ...connectionInfo,
+    multipleStatements: true
+  })
 }

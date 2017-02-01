@@ -4,7 +4,9 @@ import db from './db'
 export default new Vue({
   data: {
     dbConnection: null,
-    currentResults: null
+    currentResults: null,
+    currentSchema: null,
+    currentObjects: null
   },
   methods: {
     setConnection (con) {
