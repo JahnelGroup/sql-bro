@@ -15,6 +15,9 @@
 <script>
 import dbConnection from '../db'
 import bus from '../bus'
+
+// let storage = localStorage
+
 export default {
   data: function () {
     return {
