@@ -74,7 +74,7 @@
     font-family: 'BlinkMacSystemFont', 'Lucida Grande',
             'Segoe UI', Ubuntu, Cantarell, sans-serif;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 14px;
   }
   #app {
     /*max-width: 600px;
@@ -83,6 +83,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
+    overflow: hidden;
   }
   main {
       flex: 1;
@@ -134,6 +135,7 @@
   }
   .query-pane {
     min-height: 100px;
+    height: 100px;
     resize: vertical;
   }
   .results {

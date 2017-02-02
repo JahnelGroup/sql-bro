@@ -33,27 +33,30 @@ More information can be found [here](https://simulatedgreg.gitbooks.io/electron-
 
 
 TODOS
+• Show active schema in list somehow.
+• Add "error" response object, and "multiple" response object. (Jesse likes tabs for multiple.)
+• Add the ability to destroy connection
+
 • Work on ReadMe. Follow guide below; change what's needed.
 • connection@user > schema > table
 • connection dialog  - make sure the connection *happens* before closing and moving on.
-• Add "edit" to connections, and beef them up visually.
+• Add "edit" to connections, and beef them up visually. - Add "color"  - red for prod! to use in the breadcrumb.
 • Move the passwords out of localstorage into https://github.com/atom/node-keytar.
-• Add the ability to destroy connection
 • Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
 • Show other "objects" under schemas:  triggers, events? with good icons.
 • Make a query savable.
-• Show active schema in list somehow.
 • add multiple DB types (sql server, at least. mongO?)
 • Styling for days.
 • Add Tests for days.
 • Add flyway integration?! Show what migration you're on, and if there are others to do: clean/migrate
-• Add "error" response object, and "multiple" response object.
 • Query log
 • Easter eggs?
 • Adapt grid output (dates, bools) to better representation.
 • stupid resize issue on grid.
 • Put a spinner on "RUN" until it finishes.
 • Fix up QueryCompleter with a regex against prefix to add tables/columns. Maybe turn on auto?
+• add VARIABLE support to query window? What what!
+• https://github.com/vue-comps/vue-resize-handle ?
 
 ---
 This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about this project can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
