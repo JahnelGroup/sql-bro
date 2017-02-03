@@ -23,4 +23,7 @@ export default {
     table {
       table-layout: fixed;
     }
+    thead {
+        font-weight: bold;
+    }
 </style>
