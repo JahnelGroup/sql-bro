@@ -44,7 +44,8 @@ function getObjectsForSchema (schema) {
         UNION
         select table_name as name, table_type as type, 'viewTable' as view
         from information_schema.tables
-        where table_schema = '${schema}'`,
+        where table_schema = '${schema}'
+        ORDER BY name`,
       function (error, results) {
       if (error) reject(error)
       resolve(results.map(t => ({

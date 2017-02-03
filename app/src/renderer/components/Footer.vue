@@ -11,7 +11,9 @@ export default {
 
 <style lang="css">
 footer {
-    height: 1em;
+    height: calc(1em + 4px);
     border-top: 1px solid grey;
+    bottom: 0;
+    padding: 2px;
 }
 </style>

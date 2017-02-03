@@ -1,18 +1,19 @@
 <template lang="html">
-    <div class="">
+    <div class="queryContent">
         <p>Ctrl-Enter to run selection or full editor; Ctrl-space to autocomplete.</p>
-          <div class="editor">
-              <div id="editor"></div>
-          </div>
-          <button type="button" @click="executeQuery">
-              <i class="fa fa-bolt" aria-hidden="true"></i> Run</button>
-          <button type="button" >
-              <i class="fa fa-save" aria-hidden="true"></i> Save</button>
-          <select class="" name="">
-              Saved Queries
-          </select>
+        <div class="editor">
+            <div id="editor"></div>
+        </div>
+        <div class="button-group">
+        <button type="button" @click="executeQuery">
+            <i class="fa fa-bolt" aria-hidden="true"></i> Run</button>
+        <button type="button" >
+            <i class="fa fa-save" aria-hidden="true"></i> Save</button>
+        <select class="" name="">
+            Saved Queries
+        </select>
+        </div>
     </div>
-
 </template>
 
 <script>
@@ -61,8 +62,6 @@ export default {
       bindKey: {win: 'Ctrl-Enter', mac: 'Command-Enter'},
       exec: this.executeQuery
     })
-    /*eslint no-console: 0*/
-    console.log(this.editor)
   },
   beforeDestroy () {
     this.editor.destroy()
@@ -84,15 +83,26 @@ export default {
     margin: 0;
     font-style: italic;
   }
+  .queryContent {
+      display: flex;
+      flex-direction: column;
+  }
   .editor {
     width: calc(100% - var(--curve-size));
     height: calc(100% - 3em);
     resize: none;
     position: static;
+    flex: 1;
+    display: flex;
   }
   #editor {
     position: relative;
     width: 100%;
     height: 100%;
+    flex: 1;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
   }
 </style>
