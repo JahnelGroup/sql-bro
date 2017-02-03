@@ -1,16 +1,17 @@
 <template lang="html">
   <aside>
-      <h4>Schemas</h4>
+      <h4>Databases</h4>
       <nav>
-          <section v-for="schema in schemas">
+          <section v-for="schema in schemas" class="schema"
+              :class="{active: currentSchema==schema }">
             <div class="schemaNameGroup">
               <label class="schemaName">
                   <input type="checkbox" class="hidden"
-                        v-model="visible" :value="schema">
+                        v-model="visible" :value="schema"
+                        @click="useSchema(schema, $event)">
               <i class="fa fa-database" aria-hidden="true"></i>
               {{ schema }}
               </label>
-              <button class="useSchemaBtn"@click="useSchema(schema)">USE schema</button>
             </div>
             <schema v-if="visible.includes(schema)" :name="schema"></schema>
           </section>
@@ -20,7 +21,6 @@
 
 <script>
 import bus from '../bus'
-import dbConnection from '../db'
 import Schema from './Schema'
 
 export default {
@@ -41,15 +41,24 @@ export default {
       })
   },
   methods: {
-    useSchema: (schema) => {
-      dbConnection.runQuery('use ' + schema + ';')
-        .then(bus.setCurrentResults)
+    useSchema (schema, event) {
+      if (event.target.checked) {
+        bus.setCurrentSchema(schema)
+      }
+    }
+  },
+  computed: {
+    currentSchema() {
+      return bus.currentSchema;
     }
   }
 }
 </script>
 
 <style lang="css" scoped>
+h4 {
+  text-align: center;
+}
 .schemaNameGroup{
   margin-bottom: 15px;
 }
@@ -59,7 +68,13 @@ export default {
   font-weight: bold;
 }
 
-.useSchemaBtn{
-  float: right;
+.active {
+  background-color: var(--success-background);
+  border: 1px solid var(--success);
+  border-radius: var(--curve-size);
+  margin: -1px;
+}
+.schema {
+  padding: .5em;
 }
 </style>

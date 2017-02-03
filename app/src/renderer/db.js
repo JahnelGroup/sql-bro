@@ -58,21 +58,27 @@ function getObjectsForSchema (schema) {
 }
 
 function runQuery (query) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve) {
     connection.query(query, function (error, results, fields) {
-      if (error) reject(error)
       let returnVal
-      if (results.constructor.name === 'OkPacket') {
-        returnVal = results
-        returnVal.type = 'result-status'
-      } else {
-        let type = 'result-table'
-        let headers = fields.map(f => f.name)
-        let rows = results.map(r => headers.map(name => r[name]))
+      if (error) {
         returnVal = {
-          type,
-          headers,
-          rows
+          type: 'result-error',
+          error
+        }
+      } else {
+        if (results.constructor.name === 'OkPacket') {
+          returnVal = results
+          returnVal.type = 'result-status'
+        } else {
+          let type = 'result-table'
+          let headers = fields.map(f => f.name)
+          let rows = results.map(r => headers.map(name => r[name]))
+          returnVal = {
+            type,
+            headers,
+            rows
+          }
         }
       }
       resolve(returnVal)
