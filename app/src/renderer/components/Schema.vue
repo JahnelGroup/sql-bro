@@ -1,6 +1,9 @@
 <template lang="html">
     <div class="">
-        <input type="text" v-model="filterValue">
+        <div class="search">
+          <input type="text" v-model="filterValue">
+          <i class="fa fa-search search"></i>
+        </div>
         <ul>
             <li v-for="object in filteredList">
                 <i class="fa fa-eye" aria-hidden="true" @click="view(object)"></i>
@@ -96,6 +99,24 @@ li:hover .fa-eye{
 }
 li:hover .fa-eye + .fa {
   display: none;
+}
+.search {
+  position: relative;
+}
+input {
+  width: 100%;
+}
+input:focus {
+  outline: none;
+  /*box-shadow: -1px 1px 5px 1px rgba(0,0,0,0.75);*/
+}
+.search .fa {
+  position: absolute;
+  z-index: 1;
+  top: 3px;
+  right: 3px;
+  color: var(--success);
+
 }
 
 </style>

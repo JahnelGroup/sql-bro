@@ -11,13 +11,15 @@
 
 <script>
 import bus from '../bus'
-import ResultStatus from './ResultStatus'
-import ResultTable from './ResultTable'
+import ResultStatus from './results/ResultStatus'
+import ResultTable from './results/ResultTable'
+import ResultError from './results/ResultError'
 
 export default {
   components: {
     ResultStatus,
-    ResultTable
+    ResultTable,
+    ResultError
   },
   computed: {
     results () {

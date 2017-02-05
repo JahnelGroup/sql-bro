@@ -5,11 +5,14 @@
             <div id="editor"></div>
         </div>
         <div class="button-group">
-        <button type="button" @click="executeQuery">
-            <i class="fa fa-bolt" aria-hidden="true"></i> Run</button>
-        <button type="button" >
-            <i class="fa fa-save" aria-hidden="true"></i> Save</button>
-        <select class="" name="">
+        <button type="button" class="pure-button"@click="executeQuery">
+            <i class="fa fa-bolt" aria-hidden="true"></i> Run
+        </button>
+        <button type="button" class="pure-button" @click="openQuery">
+            <i class="fa fa-save" aria-hidden="true"></i> Save
+        </button>
+        <query-dialog @addQuery="addQuery($event)" :query="getQuery()"></query-dialog>
+        <select class="" name="savedQueries">
             Saved Queries
         </select>
         </div>
@@ -23,6 +26,11 @@ import bus from '../bus'
 
 import completer from '../QueryCompleter'
 
+import QueryDialog from './QueryDialog'
+
+let storage = localStorage
+
+
 require('brace/mode/sql')
 require('brace/ext/language_tools.js') // autocomplete
 require('brace/ext/searchbox')
@@ -33,17 +41,31 @@ langtools.addCompleter(completer)
 ace.acequire('ace/ext/searchbox')
 
 export default {
+  components: {
+    QueryDialog
+  },
   data: function () {
     return {
-      editor: null
+      editor: null,
+      queries : []
     }
   },
   methods: {
-    executeQuery () {
-      const query = this.editor.session.getTextRange(this.editor.getSelectionRange()) ||
+    getQuery () {
+      return this.editor.session.getTextRange(this.editor.getSelectionRange()) ||
           this.editor.getValue()
+    },
+    addQuery (newQuery) {
+      this.queries.push(newQuery)
+      storage.setItem('queries', JSON.stringify(this.queries))
+    },
+    executeQuery () {
+      const query = this.getQuery()
       dbConnection.runQuery(query)
         .then(bus.setCurrentResults)
+    },
+    openQuery () {
+      bus.$emit('openQuery')
     }
   },
   mounted () {
@@ -62,23 +84,24 @@ export default {
       bindKey: {win: 'Ctrl-Enter', mac: 'Command-Enter'},
       exec: this.executeQuery
     })
+
+    // set up resize-watcher.
+    const target = document.getElementById('query-pane')
+    this.observer = new MutationObserver(() => this.editor.resize());
+    this.observer.observe(target, {attributes: true});
   },
   beforeDestroy () {
     this.editor.destroy()
     this.editor.container.remove()
+    this.observer.disconnect();
+  },
+  created () {
+    this.queries = JSON.parse(storage.getItem('queries')) || []
   }
 }
 </script>
 
 <style lang="css">
-  /*textarea {
-      font-family: monospace;
-      width: calc(100% - var(--curve-size));
-      overflow: scroll;
-      resize: none;
-      height: calc(100% - 32px);
-      overflow-x: hidden;
-  }*/
   p {
     margin: 0;
     font-style: italic;

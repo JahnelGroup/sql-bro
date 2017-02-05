@@ -6,7 +6,8 @@
         v-if="connection">
       <schema-list class="frame schema-list"></schema-list>
       <div class="flex-container vertical">
-        <query-pane class="frame query-pane"></query-pane>
+        <query-pane class="frame query-pane" id="query-pane">
+        </query-pane>
         <results class="frame results"></results>
       </div>
     </main>
@@ -64,6 +65,14 @@
 
     --background: #f2f2f2;
 
+    --info: #00429b;
+    --info-background: #bde5f8;
+    --success: #4f8a10;
+    --success-background: #dff2bf;
+    --warning: #9f6000;
+    --warning-background: #feefb3;
+    --error: #d8000c;
+    --error-background: #ffbaba;
   }
 
   body {
@@ -74,7 +83,7 @@
     font-family: 'BlinkMacSystemFont', 'Lucida Grande',
             'Segoe UI', Ubuntu, Cantarell, sans-serif;
     font-weight: normal;
-    font-size: 14px;
+    font-size: 12px;
   }
   #app {
     /*max-width: 600px;
@@ -83,13 +92,16 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    overflow: hidden;
   }
   main {
       flex: 1;
       background-color: var(--background);
   }
 
+  .success {
+    color: var(--success);
+    background-color: var(--success-background);
+  }
   .flex-container {
       display: flex;
       flex-wrap: nowrap;;
@@ -109,7 +121,6 @@
     border: 1px solid var(--frame-color);
     border-radius: var(--curve-size);
     margin: .5em;
-    padding: .5em;
     overflow: auto;
     background-color: #fff;
   }
@@ -134,7 +145,6 @@
       resize: horizontal;
   }
   .query-pane {
-    min-height: 100px;
     height: 100px;
     resize: vertical;
   }

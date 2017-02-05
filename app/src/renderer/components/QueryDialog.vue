@@ -1,5 +1,5 @@
 <template lang="html">
-  <dialog :open="open">
+  <dialog :open="openDialog">
     <form class="" method="dialog">
       <label for="queryName">Query name:
         <input type="text" name="queryName" v-model="queryName" />
@@ -15,11 +15,11 @@ import bus from '../bus'
 // let storage = localstorage
 
 export default {
+  props:['query'],
   data: function () {
     return {
-      open: false,
-      queryName: '',
-      query: ''
+      openDialog: false,
+      queryName: ''
     }
   },
   methods: {
@@ -38,12 +38,12 @@ export default {
       this.host = ''
       this.user = ''
       this.password = ''
-      this.open = false
+      this.openDialog = false
     }
   },
   created () {
     bus.$on('openQuery', () => {
-      this.open = true
+      this.openDialog = true
     })
   }
 }

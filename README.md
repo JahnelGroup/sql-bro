@@ -33,9 +33,7 @@ More information can be found [here](https://simulatedgreg.gitbooks.io/electron-
 
 
 TODOS
-• Show active schema in list somehow.
-• Add "error" response object, and "multiple" response object. (Jesse likes tabs for multiple.)
-• Add the ability to destroy connection
+• Add "multiple" response object. (Jesse likes tabs for multiple.)
 
 • Work on ReadMe. Follow guide below; change what's needed.
 • connection@user > schema > table
@@ -52,7 +50,6 @@ TODOS
 • Query log
 • Easter eggs?
 • Adapt grid output (dates, bools) to better representation.
-• stupid resize issue on grid.
 • Put a spinner on "RUN" until it finishes.
 • Fix up QueryCompleter with a regex against prefix to add tables/columns. Maybe turn on auto?
 • add VARIABLE support to query window? What what!
