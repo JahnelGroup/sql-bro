@@ -44,6 +44,7 @@ export default {
     useSchema: (schema) => {
       dbConnection.runQuery('use ' + schema + ';')
         .then(bus.setCurrentResults)
+      bus.setCurrentSchema(schema)
     }
   }
 }

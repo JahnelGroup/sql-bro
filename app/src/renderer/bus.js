@@ -15,6 +15,9 @@ export default new Vue({
     },
     setCurrentResults (results) {
       this.currentResults = results
+    },
+    setCurrentSchema (schema){
+      this.currentProject = schema;
     }
   }
 })
