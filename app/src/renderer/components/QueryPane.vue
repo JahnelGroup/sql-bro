@@ -17,7 +17,6 @@
 </template>
 
 <script>
-/*eslint no-console: 0*/
 import dbConnection from '../db'
 import bus from '../bus'
 import completer from '../QueryCompleter'

@@ -1,20 +1,27 @@
 <template lang="html">
   <footer  class="info">
-    <span v-if="connection">
-      <i class="fa fa-info-circle"></i> <!-- make this a connection property-->
-      {{ connection.user }}@{{ connection.connectionName }}
+    <span class="connection">
+      <span v-if="connection">
+        <i class="fa fa-info-circle"></i> <!-- make this a connection property-->
+        {{ connection.user }}@{{ connection.connectionName }}
+      </span>
+      <span v-if="schema">
+        &#12297; <i class="fa fa-database"></i>
+        {{ schema }}
+      </span>
     </span>
-    <span v-if="schema">
-      &#12297; <i class="fa fa-database"></i>
-      {{ schema }}
-    </span>
-
+    <flyway></flyway>
   </footer>
 </template>
 
 <script>
   import bus from '../bus'
+  import Flyway from './plugins/Flyway'
+
 export default {
+  components: {
+    Flyway
+  },
   computed: {
     connection() {
       return bus.currentConnection;
@@ -32,6 +39,15 @@ footer {
     border-top: 1px solid grey;
     bottom: 0;
     padding: 2px;
+    display: flex;
+    align-content: space-between;
+    align-items: baseline;
+}
+.connection {
+  flex: 1;
+}
+flyway {
+  flex: 1;
 }
 
 .info {

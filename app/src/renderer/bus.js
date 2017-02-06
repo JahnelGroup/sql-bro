@@ -11,12 +11,14 @@ export default new Vue({
   },
   methods: {
     setConnection (con) {
-      this.currentConnection = {
-        connectionName: con.connectionName,
-        user: con.user
-      }
-      db.createConnection(con)
-      this.dbConnection = db
+      return db.createConnection(con)
+        .then(() => {
+          this.currentConnection = {
+            connectionName: con.connectionName,
+            user: con.user
+          }
+          this.dbConnection = db
+        })
     },
     disconnect () {
       this.currentConnection = null;

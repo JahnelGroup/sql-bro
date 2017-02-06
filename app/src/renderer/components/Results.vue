@@ -14,12 +14,14 @@ import bus from '../bus'
 import ResultStatus from './results/ResultStatus'
 import ResultTable from './results/ResultTable'
 import ResultError from './results/ResultError'
+import ResultMultiple from './results/ResultMultiple'
 
 export default {
   components: {
     ResultStatus,
     ResultTable,
-    ResultError
+    ResultError,
+    ResultMultiple
   },
   computed: {
     results () {

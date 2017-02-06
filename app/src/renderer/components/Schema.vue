@@ -7,12 +7,11 @@
         <ul>
             <li v-for="object in filteredList">
                 <i class="fa fa-eye" aria-hidden="true" @click="view(object)"></i>
-                <i class="fa" :class="classes[object.type]" aria-hidden="true"></i>
+                <i class="fa fa-fw" :class="classes[object.type]" aria-hidden="true"></i>
                 {{ object.name }}
             </li>
         </ul>
     </div>
-
 </template>
 
 <script>
@@ -63,8 +62,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-/* Put a magnifying glass on the filter view. */
-/* Put table symbles on the tables */
 ul {
   list-style: none;
   padding: 0;
@@ -75,18 +72,7 @@ li {
 }
 li .fa {
   display: inline-block;
-  width: 1.3em;
 }
-/*li {
-  padding-left: 1.3em;
-}
-li:before {
-  content: "\f0ce"; /* FontAwesome Unicode
-  font-family: FontAwesome;
-  display: inline-block;
-  margin-left: -1.3em; /* same as padding-left set on li
-  width: 1.3em; /* same as padding-left set on li
-}*/
 
 li .fa-eye{
   display: none;
@@ -94,7 +80,6 @@ li .fa-eye{
 
 li:hover .fa-eye{
   display: inline-block;
-    width: 1.3em;
   cursor: pointer;
 }
 li:hover .fa-eye + .fa {
@@ -116,7 +101,6 @@ input:focus {
   top: 3px;
   right: 3px;
   color: var(--success);
-
 }
 
 </style>

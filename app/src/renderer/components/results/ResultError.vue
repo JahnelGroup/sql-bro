@@ -7,11 +7,7 @@
 
 <script>
 export default {
-  props: ['result'],
-  created () {
-    /*eslint no-console:0*/
-    console.log(this.result)
-  }
+  props: ['result']
 }
 </script>
 
