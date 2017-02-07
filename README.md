@@ -36,6 +36,7 @@ TODOS
 architecture: rely more on "events" - especially for flyway?
 
 high:
+• Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
 • Make "multiple" response object into tabs.
 • Add "edit" to connections, and beef them up visually. - Add "color"  - red for prod! to use in the breadcrumb.
 • Show other "objects" under schemas:  triggers, events? with good icons.
@@ -46,13 +47,13 @@ high:
 • Move the passwords out of localstorage into https://github.com/atom/node-keytar.
 • Table Inspection: a way to see table's indexes, triggers, keys, columns, etc.
 Med:
-• Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
-• Adapt grid output (dates, bools) to better representation.
-• Put a spinner on "RUN" until it finishes.
+• Adapt grid output (dates, bools, NULL (Add color!)) to better representation.
+• lock header at top!
 • Fix up QueryCompleter with a regex against prefix to add tables/columns. Maybe turn on auto?
 • add VARIABLE support to query window? What what!
 • Search option: find column (in all tables/procs)
 • Work on ReadMe. Follow guide below; change what's needed.
+• Sort header? (reissue with SELECT * FROM (query) ORDER BY header)
 LOW:
 • add multiple DB types (sql server, at least. mongO?)
 • Styling for days.

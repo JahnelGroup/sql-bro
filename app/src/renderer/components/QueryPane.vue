@@ -6,7 +6,11 @@
         </div>
         <div class="button-group">
         <button type="button" class="pure-button"@click="executeQuery">
-            <i class="fa fa-bolt" aria-hidden="true"></i> Run</button>
+          <span v-if="running">
+            <i class="fa fa-refresh fa-spin fa-fw" aria-hidden="true"></i>
+            <span class="sr-only">Running Query...</span></span>
+          <span v-else><i class="fa fa-bolt" aria-hidden="true"></i> Run</span>
+        </button>
         <button type="button" class="pure-button">
             <i class="fa fa-save" aria-hidden="true"></i> Save</button>
         <select class="" name="">
@@ -34,15 +38,18 @@ ace.acequire('ace/ext/searchbox')
 export default {
   data: function () {
     return {
-      editor: null
+      editor: null,
+      running: false
     }
   },
   methods: {
     executeQuery () {
       const query = this.editor.session.getTextRange(this.editor.getSelectionRange()) ||
           this.editor.getValue()
+      this.running = true;
       dbConnection.runQuery(query)
         .then(bus.setCurrentResults)
+        .then(() => this.running = false)
     }
   },
   mounted () {
@@ -64,8 +71,10 @@ export default {
 
     // set up resize-watcher.
     const target = document.getElementById('query-pane')
-    this.observer = new MutationObserver(() => this.editor.resize());
-    this.observer.observe(target, {attributes: true});
+    this.observer = new MutationObserver(() => {
+      this.editor.resize()
+    });
+    this.observer.observe(target, {attributes: true, characterData: true, attributeFilter:['style']});
   },
   beforeDestroy () {
     this.editor.destroy()

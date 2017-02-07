@@ -6,7 +6,7 @@
         </div>
         <ul>
             <li v-for="object in filteredList">
-                <i class="fa fa-eye" aria-hidden="true" @click="view(object)"></i>
+                <i class="fa fa-fw fa-eye" aria-hidden="true" @click="view(object)"></i>
                 <i class="fa fa-fw" :class="classes[object.type]" aria-hidden="true"></i>
                 {{ object.name }}
             </li>
