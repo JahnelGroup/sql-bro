@@ -38,7 +38,7 @@ architecture: rely more on "events" - especially for flyway?
 high:
 • Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
 • Make "multiple" response object into tabs.
-• Add "edit" to connections, and beef them up visually. - Add "color"  - red for prod! to use in the breadcrumb.
+• Beef connection list up visually.
 • Show other "objects" under schemas:  triggers, events? with good icons.
 • Make a query savable.
 • Add Tests for days.

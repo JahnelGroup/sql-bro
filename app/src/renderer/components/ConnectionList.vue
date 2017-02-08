@@ -2,11 +2,12 @@
   <div class="">
     <connection-dialog
         @addConnection="addConnection($event)"
-        @deleteConnection="removeConnection($event)">
+        @saveConnection="saveConnection">
     </connection-dialog>
     <ul>
       <li v-for="connection in connections">
-        <connection :connection="connection"></connection>
+        <connection :connection="connection"
+            @deleteConnection="removeConnection($event)"></connection>
       </li>
       <li><button @click="openConnection">Add Connection</button></li>
     </ul>
@@ -33,13 +34,19 @@ export default {
   },
   methods: {
     addConnection (newConnection) {
+      newConnection.id = Date.now();
       this.connections.push(newConnection)
       storage.setItem('connections', JSON.stringify(this.connections))
     },
     // also, all this storage stuff is probably a sign that it should be in the bus,
     // and the bus should just persist everythign. :-|
     removeConnection (oldConnection) {
-      this.connections = this.connections.filter(c => c !== oldConnection)
+      this.connections = this.connections.filter(c => c.id !== oldConnection.id)
+      storage.setItem('connections', JSON.stringify(this.connections))
+    },
+    saveConnection (connection) {
+      let id = this.connections.findIndex(c => c === connection || c.id === connection.id);
+      this.connections.splice(id, 1, connection);
       storage.setItem('connections', JSON.stringify(this.connections))
     },
     openConnection () {

@@ -1,8 +1,8 @@
 <template lang="html">
-  <footer  class="info">
+  <footer :class="connection && connection.environment">
     <span class="connection">
       <span v-if="connection">
-        <i class="fa fa-info-circle"></i> <!-- make this a connection property-->
+        <i class = "fa" :class="envClass"></i>
         {{ connection.user }}@{{ connection.connectionName }}
       </span>
       <span v-if="schema">
@@ -18,6 +18,11 @@
   import bus from '../bus'
   import Flyway from './plugins/Flyway'
 
+const classMap = {
+  Production: 'fa-warning',
+  Testing: 'fa-info-circle',
+  Local: 'fa-check-circle'
+}
 export default {
   components: {
     Flyway
@@ -28,6 +33,10 @@ export default {
     },
     schema() {
       return bus.currentSchema;
+    },
+    envClass () {
+      return bus.currentConnection &&
+        classMap[bus.currentConnection.environment]
     }
   }
 }
@@ -50,9 +59,17 @@ flyway {
   flex: 1;
 }
 
-.info {
+.Local {
   color: var(--info);
   background-color: var(--info-background);
+}
+.Testing {
+  color: var(--warning);
+  background-color: var(--warning-background);
+}
+.Production {
+  color: var(--error);
+  background-color: var(--error-background);
 }
 /*
 fa-info-circle = info

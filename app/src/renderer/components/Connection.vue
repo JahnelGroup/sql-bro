@@ -7,6 +7,7 @@
         <span class="sr-only">Attempting to connect...</span></span>
       <span v-else>Connect</span>
     </button>
+    <button type="button" @click="editConnection">Edit</button>
     <button type="button" @click="removeConnection">Remove</button>
   </div>
 </template>
@@ -33,6 +34,9 @@ export default {
     },
     removeConnection () {
       this.$emit('deleteConnection', this.connection)
+    },
+    editConnection () {
+      bus.$emit('editConnection', this.connection)
     }
   }
 }

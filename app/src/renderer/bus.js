@@ -15,6 +15,7 @@ export default new Vue({
         .then(() => {
           this.currentConnection = {
             connectionName: con.connectionName,
+            environment: con.environment,
             user: con.user
           }
           this.dbConnection = db
