@@ -122,8 +122,10 @@ if (process.env.NODE_ENV !== 'production') {
  * Adjust rednererConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = ''
-
+  rendererConfig.devtool = 'eval' // This was ''. Blows up build.
+  // on the other hand, it seems to be triggering "dev mode" for vue.
+  // ANother option is move it to the main process and communicate?
+  
   rendererConfig.plugins.push(
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
