@@ -1,5 +1,5 @@
 <template lang="html">
-  <dialog> <!-- :open="open"-->
+  <dialog :open="open">
     <form class="pure-form pure-form-stacked" method="dialog">
       <label for="connectionName">Connection name:
         <input type="text" name="connectionName" v-model="connection.connectionName" />
@@ -39,6 +39,7 @@ export default {
   data: function () {
     return {
       mode: 'add',
+      open: false,
       connection: {}
     }
   },
@@ -56,21 +57,19 @@ export default {
     },
     clear () {
       this.connection = {};
-      document.querySelector('dialog').close()
-      // this.open = false
+      this.open = false
     }
   },
   created () {
     bus.$on('openConnection', () => {
       this.mode = 'add'
-      // this.open = true
-      document.querySelector('dialog').showModal()
+      this.open = true
     })
     bus.$on('editConnection', (connection) => {
       this.mode = 'edit'
       this.connection = Object.assign({}, connection)
-      // this.open = true;
-      document.querySelector('dialog').showModal()
+      console.log(this.connection)
+      this.open = true;
     })
   }
 }

@@ -36,7 +36,7 @@ TODOS
 architecture: rely more on "events" - especially for flyway?
 
 high:
-• Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
+• Flesh out grid component: (exports as right-click); inline editing issuing an "update")
 • Make "multiple" response object into tabs.
 • Beef connection list up visually.
 • Show other "objects" under schemas:  triggers, events? with good icons.
@@ -47,7 +47,7 @@ high:
 • Move the passwords out of localstorage into https://github.com/atom/node-keytar.
 • Table Inspection: a way to see table's indexes, triggers, keys, columns, etc.
 Med:
-• Adapt grid output (dates, bools, NULL (Add color!)) to better representation.
+• Adapt grid output (dates, bools) to better representation.
 • lock header at top!
 • Fix up QueryCompleter with a regex against prefix to add tables/columns. Maybe turn on auto?
 • add VARIABLE support to query window? What what!
@@ -62,6 +62,9 @@ LOW:
 
 Done
 X connection dialog  - make sure the connection *happens* before closing and moving on.
+X Added "null" to grid output.
+X added SQL, CSV, JSON export to clipboard.
+X Style improvements, resizes grid now.
 
 ---
 This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about this project can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).

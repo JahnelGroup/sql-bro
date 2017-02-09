@@ -22,9 +22,10 @@ export default new Vue({
         })
     },
     disconnect () {
-      this.currentConnection = null;
-      this.dbConnection = null;
-      this.currentSchema = null;
+      this.currentConnection = null
+      this.dbConnection = null
+      this.currentSchema = null
+      this.currentResults = null
     },
     setCurrentResults (results) {
       this.currentResults = results

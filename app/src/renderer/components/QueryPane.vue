@@ -1,21 +1,21 @@
 <template lang="html">
-    <div class="queryContent">
+    <div @mousemove.self="conditionalResize($event)">
         <p>Ctrl-Enter to run selection or full editor; Ctrl-space to autocomplete.</p>
         <div class="editor">
             <div id="editor"></div>
         </div>
         <div class="button-group">
-        <button type="button" class="pure-button"@click="executeQuery">
-          <span v-if="running">
-            <i class="fa fa-refresh fa-spin fa-fw" aria-hidden="true"></i>
-            <span class="sr-only">Running Query...</span></span>
-          <span v-else><i class="fa fa-bolt" aria-hidden="true"></i> Run</span>
-        </button>
-        <button type="button" class="pure-button">
-            <i class="fa fa-save" aria-hidden="true"></i> Save</button>
-        <select class="" name="">
-            Saved Queries
-        </select>
+          <button type="button" class="pure-button" @click="executeQuery">
+            <span v-if="running">
+              <i class="fa fa-refresh fa-spin fa-fw" aria-hidden="true"></i>
+              <span class="sr-only">Running Query...</span></span>
+            <span v-else><i class="fa fa-bolt" aria-hidden="true"></i> Run</span>
+          </button>
+          <button type="button" class="pure-button">
+              <i class="fa fa-save" aria-hidden="true"></i> Save</button>
+          <select class="" name="">
+              Saved Queries
+          </select>
         </div>
     </div>
 </template>
@@ -39,7 +39,8 @@ export default {
   data: function () {
     return {
       editor: null,
-      running: false
+      running: false,
+      height: 0
     }
   },
   methods: {
@@ -50,9 +51,17 @@ export default {
       dbConnection.runQuery(query)
         .then(bus.setCurrentResults)
         .then(() => this.running = false)
+    },
+    conditionalResize (e) {
+      if (e.target.clientHeight != this.height) {
+        this.height = e.target.clientHeight
+        console.log('resizing!')
+        this.editor.resize()
+      }
     }
   },
   mounted () {
+    this.height = document.getElementById('query-pane').clientHeight
     this.editor = ace.edit("editor")
     // this.editor.setAutoScrollEditorIntoView(true)
     // this.editor.completers = [completer]
@@ -68,18 +77,10 @@ export default {
       bindKey: {win: 'Ctrl-Enter', mac: 'Command-Enter'},
       exec: this.executeQuery
     })
-
-    // set up resize-watcher.
-    const target = document.getElementById('query-pane')
-    this.observer = new MutationObserver(() => {
-      this.editor.resize()
-    });
-    this.observer.observe(target, {attributes: true, characterData: true, attributeFilter:['style']});
   },
   beforeDestroy () {
     this.editor.destroy()
     this.editor.container.remove()
-    this.observer.disconnect();
   }
 }
 </script>
@@ -89,17 +90,17 @@ export default {
     margin: 0;
     font-style: italic;
   }
-  .queryContent {
+  .query-pane {
       display: flex;
       flex-direction: column;
   }
   .editor {
     width: calc(100% - var(--curve-size));
-    height: calc(100% - 3em);
+    height: calc(100% - 4em);
     resize: none;
     position: static;
-    flex: 1;
-    display: flex;
+    /*flex: 1;
+    display: flex;*/
   }
   #editor {
     position: relative;
@@ -110,5 +111,15 @@ export default {
     bottom: 0;
     right: 0;
     left: 0;
+  }
+  .button-group {
+    flex-direction: row-reverse;
+    display: flex;
+    align-content: space-between;
+    flex: 1;
+  }
+  .button-group button, .button-group select {
+    margin: 5px;
+    flex-basis: auto;
   }
 </style>

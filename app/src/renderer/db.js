@@ -59,6 +59,7 @@ function getObjectsForSchema (schema) {
 
 function runQuery (query) {
   return new Promise(function (resolve) {
+    const startTime = new Date()
     connection.query(query, function (error, results, fields) {
       let returnVal
       if (error) {
@@ -69,6 +70,8 @@ function runQuery (query) {
       } else {
         returnVal = transformResults(results, fields)
       }
+      const runTime = new Date() - startTime
+      returnVal.runTime = runTime
       resolve(returnVal);
     })
   })
@@ -77,7 +80,11 @@ function runQuery (query) {
 function createConnection (connectionInfo) {
   connection = mysql.createConnection({
     ...connectionInfo,
-    multipleStatements: true
+    multipleStatements: true,
+    typeCast: function (field, next) {
+      if (field.type == 'DATE') return field.string();
+      return next()
+    }
   })
   return new Promise(function (resolve, reject) {
     connection.connect(function (err) {
@@ -118,6 +125,8 @@ function transformResults(result, fields) {
     let rows = result.map(r => headers.map(name => r[name]))
     returnVal = {
       type,
+      db: fields[0].db,
+      table: fields[0].table,
       headers,
       rows
     }
