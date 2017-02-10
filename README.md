@@ -32,33 +32,36 @@ More information can be found [here](https://simulatedgreg.gitbooks.io/electron-
 ---
 
 
-TODOS
+## TODOS
+
 architecture: rely more on "events" - especially for flyway?
 
 high:
-• Flesh out grid component: (exports as right-click); inline editing issuing an "update")
-• Make "multiple" response object into tabs.
-• Beef connection list up visually.
-• Show other "objects" under schemas:  triggers, events? with good icons.
-• Make a query savable.
-• Add Tests for days.
-• Add flyway integration?! Show what migration you're on, and if there are others to do: clean/migrate
-• Query log(including run times)
-• Move the passwords out of localstorage into https://github.com/atom/node-keytar.
-• Table Inspection: a way to see table's indexes, triggers, keys, columns, etc.
+* Flesh out grid component: (exports as right-click); inline editing issuing an "update")
+* Make "multiple" response object into tabs.
+* Beef connection list up visually.
+* Show other "objects" under schemas:  triggers, events? with good icons.
+* Make a query savable.
+* Add Tests for days.
+* Add flyway integration?! Show what migration you're on, and if there are others to do: clean/migrate (dev/testing only! No prod!)
+* Query log(including run times)
+* Move the passwords out of localstorage into `https://github.com/atom/node-keytar`.
+* Table Inspection: a way to see table's indexes, triggers, keys, columns, etc.
+
 Med:
-• Adapt grid output (dates, bools) to better representation.
-• lock header at top!
-• Fix up QueryCompleter with a regex against prefix to add tables/columns. Maybe turn on auto?
-• add VARIABLE support to query window? What what!
-• Search option: find column (in all tables/procs)
-• Work on ReadMe. Follow guide below; change what's needed.
-• Sort header? (reissue with SELECT * FROM (query) ORDER BY header)
-LOW:
-• add multiple DB types (sql server, at least. mongO?)
-• Styling for days.
-• Easter eggs?
-• https://github.com/vue-comps/vue-resize-handle ?
+* Adapt grid output (dates, bools, NULL (Add color!)) to better representation.
+* lock header at top!
+* Fix up QueryCompleter with a regex against prefix to add tables/columns. Maybe turn on auto?
+* add VARIABLE support to query window? What what!
+* Search option: find column (in all tables/procs)
+* Work on ReadMe. Follow guide below; change what's needed.
+* Sort header? (reissue with `SELECT * FROM (query) ORDER BY header`)
+
+Low:
+* add multiple DB types (sql server, at least. mongO?)
+* Styling for days.
+* Easter eggs?
+* `https://github.com/vue-comps/vue-resize-handle` ?
 
 Done
 X connection dialog  - make sure the connection *happens* before closing and moving on.
