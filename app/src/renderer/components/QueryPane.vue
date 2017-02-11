@@ -11,10 +11,24 @@
         <button type="button" class="pure-button" @click="openQuery">
             <i class="fa fa-save" aria-hidden="true"></i> Save
         </button>
-        <query-dialog @addQuery="addQuery($event)" :query="getQuery()"></query-dialog>
-        <select class="" name="savedQueries">
-            Saved Queries
-        </select>
+        <query-dialog@addQuery="addQuery($event)"></query-dialog>
+        <a @click="openQueriesDropdown()" id="menuLink1" class="pure-button">Saved Queries</a>
+        <div v-show="clicked" class="savedQueriesList">
+          <ul>
+            <li v-for="q in queries">
+              <div>
+                {{q.queryName}}
+                <i class="fa fa-bolt runSavedQueryIcon" aria-hidden="true" @click="runSavedQuery(q.query)"></i>
+                <i class="fa fa-trash deleteSavedQueryIcon" aria-hidden="true" @click="deleteSavedQuery(q.queryName)"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- <select class="" v-model="selectedQuery" name="savedQueries">
+            <option v-for="q in queries" v-bind:value="q.query">
+              {{q.queryName}}
+            </option>
+        </select> -->
         </div>
     </div>
 </template>
@@ -47,7 +61,9 @@ export default {
   data: function () {
     return {
       editor: null,
-      queries : []
+      queries : [],
+      selectedQuery: "",
+      clicked : false
     }
   },
   methods: {
@@ -55,9 +71,14 @@ export default {
       return this.editor.session.getTextRange(this.editor.getSelectionRange()) ||
           this.editor.getValue()
     },
-    addQuery (newQuery) {
+    addQuery (newQueryName) {
+      let newQuery = {
+          queryName: newQueryName,
+          query: this.getQuery(),
+          schema: bus.currentSchema
+      }
       this.queries.push(newQuery)
-      storage.setItem('queries', JSON.stringify(this.queries))
+      // storage.setItem('queries', JSON.stringify(this.queries))
     },
     executeQuery () {
       const query = this.getQuery()
@@ -66,6 +87,15 @@ export default {
     },
     openQuery () {
       bus.$emit('openQuery')
+    },
+    openQueriesDropdown () {
+      this.clicked = !this.clicked;
+    },
+    runSavedQuery (query) {
+      alert(query)
+    },
+    deleteSavedQuery (name) {
+      alert(name)
     }
   },
   mounted () {
@@ -96,7 +126,7 @@ export default {
     this.observer.disconnect();
   },
   created () {
-    this.queries = JSON.parse(storage.getItem('queries')) || []
+    this.queries = JSON.parse(storage.getItem('queries')).filter(q => q.schema === bus.currentSchema) || []
   }
 }
 </script>
@@ -127,5 +157,29 @@ export default {
     bottom: 0;
     right: 0;
     left: 0;
+  }
+
+  .pure-menu-horizontal{
+    z-index: 5;
+  }
+
+  .savedQueriesList{
+    display: block;
+    z-index: 5;
+    top: 100%;
+    position: relative;
+  }
+
+  .runSavedQueryIcon{
+    margin-left: 10px;
+  }
+
+  .deleteSavedQueryIcon{
+    margin-left: 10px;
+    color: red;
+  }
+
+  .runSavedQueryIcon:hover, .deleteSavedQueryIcon:hover{
+    cursor: pointer;
   }
 </style>

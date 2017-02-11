@@ -15,7 +15,6 @@ import bus from '../bus'
 // let storage = localstorage
 
 export default {
-  props:['query'],
   data: function () {
     return {
       openDialog: false,
@@ -24,10 +23,7 @@ export default {
   },
   methods: {
     add () {
-      this.$emit('addQuery', {
-        queryName: this.queryName,
-        query: this.query,
-      })
+      this.$emit('addQuery', this.queryName)
       this.clear()
     },
     cancel () {
@@ -35,9 +31,6 @@ export default {
     },
     clear () {
       this.queryName = ''
-      this.host = ''
-      this.user = ''
-      this.password = ''
       this.openDialog = false
     }
   },
