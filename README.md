@@ -32,28 +32,41 @@ More information can be found [here](https://simulatedgreg.gitbooks.io/electron-
 ---
 
 
-TODOS
-• Add "multiple" response object. (Jesse likes tabs for multiple.)
+## TODOS
 
-• Work on ReadMe. Follow guide below; change what's needed.
-• connection@user > schema > table
-• connection dialog  - make sure the connection *happens* before closing and moving on.
-• Add "edit" to connections, and beef them up visually. - Add "color"  - red for prod! to use in the breadcrumb.
-• Move the passwords out of localstorage into https://github.com/atom/node-keytar.
-• Flesh out grid component: (Export as SQL insert; export as json; inline editing issuing an "update")
-• Show other "objects" under schemas:  triggers, events? with good icons.
-• Make a query savable.
-• add multiple DB types (sql server, at least. mongO?)
-• Styling for days.
-• Add Tests for days.
-• Add flyway integration?! Show what migration you're on, and if there are others to do: clean/migrate
-• Query log
-• Easter eggs?
-• Adapt grid output (dates, bools) to better representation.
-• Put a spinner on "RUN" until it finishes.
-• Fix up QueryCompleter with a regex against prefix to add tables/columns. Maybe turn on auto?
-• add VARIABLE support to query window? What what!
-• https://github.com/vue-comps/vue-resize-handle ?
+architecture: rely more on "events" - especially for flyway?
+
+high:
+* Flesh out grid component: (exports as right-click); inline editing issuing an "update")
+* Make "multiple" response object into tabs.
+* Beef connection list up visually.
+* Show other "objects" under schemas:  triggers, events? with good icons.
+* Add Tests for days.
+* Add flyway integration?! Show what migration you're on, and if there are others to do: clean/migrate (dev/testing only! No prod!)
+* Query log(including run times)
+* Move the passwords out of localstorage into `https://github.com/atom/node-keytar`.
+* Table Inspection: a way to see table's indexes, triggers, keys, columns, etc.
+
+Med:
+* Adapt grid output (dates, bools, NULL (Add color!)) to better representation.
+* lock header at top!
+* Fix up QueryCompleter with a regex against prefix to add tables/columns. Maybe turn on auto?
+* add VARIABLE support to query window? What what!
+* Search option: find column (in all tables/procs)
+* Work on ReadMe. Follow guide below; change what's needed.
+* Sort header? (reissue with `SELECT * FROM (query) ORDER BY header`)
+
+Low:
+* add multiple DB types (sql server, at least. mongO?)
+* Styling for days.
+* Easter eggs?
+* `https://github.com/vue-comps/vue-resize-handle` ?
+
+Done
+X connection dialog  - make sure the connection *happens* before closing and moving on.
+X Added "null" to grid output.
+X added SQL, CSV, JSON export to clipboard.
+X Style improvements, resizes grid now.
 
 ---
 This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about this project can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).

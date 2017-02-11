@@ -1,10 +1,7 @@
 <template lang="html">
     <div class="results">
-        <div>
-          export as csv, json, sql insert
-          <button class="clearResultsBtn" @click="clearResults()">Clear Results</button>
-        </div>
         <component v-if="results" :is="results.type" :result="results"></component>
+        <span v-if="results">{{ results.runTime / 1000 }} Seconds</span>
         <p>Next/Prev buttons (if limit)</p>
     </div>
 </template>
@@ -14,21 +11,18 @@ import bus from '../bus'
 import ResultStatus from './results/ResultStatus'
 import ResultTable from './results/ResultTable'
 import ResultError from './results/ResultError'
+import ResultMultiple from './results/ResultMultiple'
 
 export default {
   components: {
     ResultStatus,
     ResultTable,
-    ResultError
+    ResultError,
+    ResultMultiple
   },
   computed: {
     results () {
       return bus.currentResults
-    }
-  },
-  methods: {
-    clearResults: () => {
-      bus.setCurrentResults('')
     }
   }
 }

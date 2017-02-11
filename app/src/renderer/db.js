@@ -59,6 +59,7 @@ function getObjectsForSchema (schema) {
 
 function runQuery (query) {
   return new Promise(function (resolve) {
+    const startTime = new Date()
     connection.query(query, function (error, results, fields) {
       let returnVal
       if (error) {
@@ -67,21 +68,11 @@ function runQuery (query) {
           error
         }
       } else {
-        if (results.constructor.name === 'OkPacket') {
-          returnVal = results
-          returnVal.type = 'result-status'
-        } else {
-          let type = 'result-table'
-          let headers = fields.map(f => f.name)
-          let rows = results.map(r => headers.map(name => r[name]))
-          returnVal = {
-            type,
-            headers,
-            rows
-          }
-        }
+        returnVal = transformResults(results, fields)
       }
-      resolve(returnVal)
+      const runTime = new Date() - startTime
+      returnVal.runTime = runTime
+      resolve(returnVal);
     })
   })
 }
@@ -89,6 +80,61 @@ function runQuery (query) {
 function createConnection (connectionInfo) {
   connection = mysql.createConnection({
     ...connectionInfo,
-    multipleStatements: true
+    multipleStatements: true,
+    typeCast: function (field, next) {
+      if (field.type == 'DATE') return field.string();
+      return next()
+    }
   })
+  return new Promise(function (resolve, reject) {
+    connection.connect(function (err) {
+      if (err) {
+        connection = null;
+        reject('Error connecting: ' + err.stack)
+      } else {
+        resolve(connection)
+      }
+    })
+  });
+}
+
+/**
+ * Returns the the results, transformed for display.
+ * May be called recursively.
+ * @param {Object} result
+ * @param {Object} fields - if a table result.
+ * @returns {Object} containing the type, and fields for that type.
+ */
+function transformResults(result, fields) {
+  let returnVal;
+  if (result.constructor.name === 'OkPacket') {
+    returnVal = result
+    returnVal.type = 'result-status'
+  } 
+    // is it a multi-function?
+    // This is tricky. results will be [], so will fields[].
+    // But, results can have arrays, or OK packets: [[], OkPacket],
+    // fields can have arrays or undefined. [[], undefined]
+    // Normally, they'll have RowDataPackets or FieldPackets.
+    else if (Array.isArray(result) && Array.isArray(fields) &&
+        (result.find(res => res.constructor && res.constructor.name === "RowDataPacket") ||
+         fields.find(f => f && f.constructor && f.constructor.name == "FieldPacket"))) {
+           // not a multifunction; just a grid.
+    let type = 'result-table'
+    let headers = fields.map(f => f.name)
+    let rows = result.map(r => headers.map(name => r[name]))
+    returnVal = {
+      type,
+      db: fields[0].db,
+      table: fields[0].table,
+      headers,
+      rows
+    }
+  } else {
+    returnVal = {
+      type: 'result-multiple',
+      results: result.map((el, i) => transformResults(el, fields[i]))
+    }
+  }
+  return returnVal;
 }

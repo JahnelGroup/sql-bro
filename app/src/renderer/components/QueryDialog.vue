@@ -1,23 +1,22 @@
 <template lang="html">
-  <dialog :open="openDialog">
-    <form class="" method="dialog">
+  <dialog :open="open">
+    <form class="pure-form pure-form-stacked" method="dialog">
       <label for="queryName">Query name:
         <input type="text" name="queryName" v-model="queryName" />
       </label>
-      <button type="submit" name="connect" @click.prevent="add">Add</button>
-      <button type="button" name="cancel" @click.prevent="cancel">Cancel</button>
+      <button type="submit" name="connect" class="pure-button pure-button-primary" @click.prevent="add">Save</button>
+      <button type="button" name="cancel" class="pure-button "@click.prevent="cancel">Cancel</button>
     </form>
   </dialog>
 </template>
 
 <script>
 import bus from '../bus'
-// let storage = localstorage
 
 export default {
   data: function () {
     return {
-      openDialog: false,
+      open: false,
       queryName: ''
     }
   },
@@ -31,19 +30,27 @@ export default {
     },
     clear () {
       this.queryName = ''
-      this.openDialog = false
+      this.open = false
     }
   },
   created () {
     bus.$on('openQuery', () => {
-      this.openDialog = true
+      this.open = true
     })
   }
 }
 </script>
 
-<style lang="css">
-textarea {
-    height: 150px;
-}
+<style lang="css" scoped>
+  textarea {
+      height: 150px;
+  }
+  dialog {
+    background: #FFF;
+    width: 200px;
+    padding: 1.5em;
+    margin: 1em auto;
+    border: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  }
 </style>

@@ -1,26 +1,42 @@
 <template lang="html">
-  <footer  class="info">
-    <span v-if="connection">
-      <i class="fa fa-info-circle"></i> <!-- make this a connection property-->
-      {{ connection.user }}@{{ connection.connectionName }}
+  <footer :class="connection && connection.environment">
+    <span class="connection">
+      <span v-if="connection">
+        <i class = "fa" :class="envClass"></i>
+        {{ connection.user }}@{{ connection.connectionName }}
+      </span>
+      <span v-if="schema">
+        &#12297; <i class="fa fa-database"></i>
+        {{ schema }}
+      </span>
     </span>
-    <span v-if="schema">
-      &#12297; <i class="fa fa-database"></i>
-      {{ schema }}
-    </span>
-
+    <flyway></flyway>
   </footer>
 </template>
 
 <script>
   import bus from '../bus'
+  import Flyway from './plugins/Flyway'
+
+const classMap = {
+  Production: 'fa-warning',
+  Testing: 'fa-info-circle',
+  Local: 'fa-check-circle'
+}
 export default {
+  components: {
+    Flyway
+  },
   computed: {
     connection() {
       return bus.currentConnection;
     },
     schema() {
       return bus.currentSchema;
+    },
+    envClass () {
+      return bus.currentConnection &&
+        classMap[bus.currentConnection.environment]
     }
   }
 }
@@ -32,11 +48,28 @@ footer {
     border-top: 1px solid grey;
     bottom: 0;
     padding: 2px;
+    display: flex;
+    align-content: space-between;
+    align-items: baseline;
+}
+.connection {
+  flex: 1;
+}
+flyway {
+  flex: 1;
 }
 
-.info {
+.Local {
   color: var(--info);
   background-color: var(--info-background);
+}
+.Testing {
+  color: var(--warning);
+  background-color: var(--warning-background);
+}
+.Production {
+  color: var(--error);
+  background-color: var(--error-background);
 }
 /*
 fa-info-circle = info

@@ -1,20 +1,33 @@
 <template lang="html">
   <dialog :open="open">
-    <form class="" method="dialog">
+    <form class="pure-form pure-form-stacked" method="dialog">
       <label for="connectionName">Connection name:
-        <input type="text" name="connectionName" v-model="connectionName" />
+        <input type="text" name="connectionName" v-model="connection.connectionName" />
+      </label>
+      <label for="environment">Environment:
+        <select id="environment" v-model="connection.environment">
+            <option>Local</option>
+            <option>Testing</option>
+            <option>Production</option>
+        </select>
       </label>
       <label for="host">Host:
-        <input type="text" name="host" v-model="host" />
+        <input type="text" name="host" v-model="connection.host" />
       </label>
       <label for="user">User:
-        <input type="text" name="user" v-model="user" />
+        <input type="text" name="user" v-model="connection.user" />
       </label>
       <label for="password">Password:
-        <input type="text" name="password" v-model="password" />
+        <input type="text" name="password" v-model="connection.password" />
       </label>
-      <button type="submit" name="connect" @click.prevent="add">Add</button>
-      <button type="button" name="cancel" @click.prevent="cancel">Cancel</button>
+      <button v-if="mode == 'add'" type="submit" name="connect"
+          class="pure-button pure-button-primary"         @click.prevent="add">Add</button>
+      <button v-else type="submit" name="connect"
+          class="pure-button pure-button-primary"
+          @click.prevent="save">Save</button>
+      <button type="button" name="cancel" 
+          class="pure-button"
+          @click.prevent="cancel">Cancel</button>
     </form>
   </dialog>
 </template>
@@ -25,45 +38,54 @@ import bus from '../bus'
 export default {
   data: function () {
     return {
+      mode: 'add',
       open: false,
-      connectionName: '',
-      host: '',
-      user: '',
-      password: ''
+      connection: {}
     }
   },
   methods: {
     add () {
-      // We're using vue 1 by accident! :-O This will be $emit when changed.
-      this.$emit('addConnection', {
-        connectionName: this.connectionName,
-        host: this.host,
-        user: this.user,
-        password: this.password
-      })
+      this.$emit('addConnection', this.connection)
+      this.clear()
+    },
+    save () {
+      this.$emit('saveConnection', this.connection)
       this.clear()
     },
     cancel () {
       this.clear()
     },
     clear () {
-      this.connectionName = ''
-      this.host = ''
-      this.user = ''
-      this.password = ''
+      this.connection = {};
       this.open = false
     }
   },
   created () {
     bus.$on('openConnection', () => {
+      this.mode = 'add'
       this.open = true
+    })
+    bus.$on('editConnection', (connection) => {
+      this.mode = 'edit'
+      this.connection = Object.assign({}, connection)
+      console.log(this.connection)
+      this.open = true;
     })
   }
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 textarea {
     height: 150px;
 }
+dialog {
+  background: #FFF;
+  width: 300px;
+  padding: 1.5em;
+  margin: 1em auto;
+  border: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
 </style>

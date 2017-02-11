@@ -7,21 +7,26 @@ export default new Vue({
     currentResults: null,
     currentConnection: null,
     currentSchema: null,
-    currentObjects: null
+    currentObjects: null,
+    lastRunQuery: null,
   },
   methods: {
     setConnection (con) {
-      this.currentConnection = {
-        connectionName: con.connectionName,
-        user: con.user
-      }
-      db.createConnection(con)
-      this.dbConnection = db
+      return db.createConnection(con)
+        .then(() => {
+          this.currentConnection = {
+            connectionName: con.connectionName,
+            environment: con.environment,
+            user: con.user
+          }
+          this.dbConnection = db
+        })
     },
     disconnect () {
-      this.currentConnection = null;
-      this.dbConnection = null;
-      this.currentSchema = null;
+      this.currentConnection = null
+      this.dbConnection = null
+      this.currentSchema = null
+      this.currentResults = null
     },
     setCurrentResults (results) {
       this.currentResults = results
@@ -31,6 +36,10 @@ export default new Vue({
         .then(this.setCurrentResults)
         .then(() => this.currentSchema = schemaName)
         .catch(() => this.currentSchema = null);
+      this.$emit("changedSchema", schemaName)
+    },
+    setLastRunQuery (query) {
+      this.lastRunQuery = query;
     }
   }
 })

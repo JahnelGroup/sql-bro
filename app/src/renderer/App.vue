@@ -5,8 +5,8 @@
     <main class="flex-container horizontal"
         v-if="connection">
       <schema-list class="frame schema-list"></schema-list>
-      <div class="flex-container vertical">
-        <query-pane class="frame query-pane" id="query-pane">
+      <div class="flex-container vertical" @drag="log">
+        <query-pane class="frame query-pane"  id="query-pane">
         </query-pane>
         <results class="frame results"></results>
       </div>
@@ -45,6 +45,11 @@
     computed: {
       connection () {
         return bus.dbConnection
+      }
+    },
+    methods: {
+      log (event) {
+        console.log("hi", event)
       }
     }
   }

@@ -1,40 +1,37 @@
 <template lang="html">
-    <div class="queryContent">
+    <div @mousemove.self="conditionalResize($event)">
         <p>Ctrl-Enter to run selection or full editor; Ctrl-space to autocomplete.</p>
         <div class="editor">
             <div id="editor"></div>
         </div>
         <div class="button-group">
-        <button type="button" class="pure-button"@click="executeQuery">
-            <i class="fa fa-bolt" aria-hidden="true"></i> Run
+        <button type="button" class="pure-button" @click="runQuery">
+          <span v-if="running">
+            <i class="fa fa-refresh fa-spin fa-fw" aria-hidden="true"></i>
+            <span class="sr-only">Running Query...</span></span>
+          <span v-else><i class="fa fa-bolt" aria-hidden="true"></i> Run</span>
         </button>
         <button type="button" class="pure-button" @click="openQuery">
             <i class="fa fa-save" aria-hidden="true"></i> Save
         </button>
-        <query-dialog@addQuery="addQuery($event)"></query-dialog>
-        <a @click="openQueriesDropdown()" id="menuLink1" class="pure-button">Saved Queries</a>
+        <query-dialog @addQuery="addQuery($event)"></query-dialog>
+        <button @click="openQueriesDropdown()" id="menuLink1" class="pure-button">Saved Queries</button>
         <div v-show="clicked" class="savedQueriesList">
-          <ul>
-            <li v-for="q in queries">
+          <ul class="queriesDropdown">
+            <li v-for="q in filteredQueries" class="queryListElement">
               <div>
-                {{q.queryName}}
+                {{q.name}}
                 <i class="fa fa-bolt runSavedQueryIcon" aria-hidden="true" @click="runSavedQuery(q.query)"></i>
-                <i class="fa fa-trash deleteSavedQueryIcon" aria-hidden="true" @click="deleteSavedQuery(q.queryName)"></i>
+                <i class="fa fa-trash deleteSavedQueryIcon" aria-hidden="true" @click="deleteSavedQuery(q.name)"></i>
               </div>
             </li>
           </ul>
         </div>
-        <!-- <select class="" v-model="selectedQuery" name="savedQueries">
-            <option v-for="q in queries" v-bind:value="q.query">
-              {{q.queryName}}
-            </option>
-        </select> -->
-        </div>
+      </div>
     </div>
 </template>
 
 <script>
-/*eslint no-console: 0*/
 import dbConnection from '../db'
 import bus from '../bus'
 
@@ -62,8 +59,10 @@ export default {
     return {
       editor: null,
       queries : [],
-      selectedQuery: "",
-      clicked : false
+      filteredQueries : [],
+      clicked : false,
+      running: false,
+      height: 0
     }
   },
   methods: {
@@ -73,17 +72,40 @@ export default {
     },
     addQuery (newQueryName) {
       let newQuery = {
-          queryName: newQueryName,
+          name: newQueryName,
           query: this.getQuery(),
           schema: bus.currentSchema
       }
       this.queries.push(newQuery)
-      // storage.setItem('queries', JSON.stringify(this.queries))
+      storage.setItem('queries', JSON.stringify(this.queries))
+      this.filterSavedQueriesBySchema(bus.currentSchema)
     },
-    executeQuery () {
+    runQuery () {
       const query = this.getQuery()
+      this.executeQuery(query)
+    },
+    executeQuery (query) {
+      this.running = true;
       dbConnection.runQuery(query)
         .then(bus.setCurrentResults)
+        .then(() => {
+          this.running = false
+          bus.setLastRunQuery(query)
+        })
+    },
+    conditionalResize (e) {
+      if (e.target.clientHeight != this.height) {
+        this.height = e.target.clientHeight
+        console.log('resizing!')
+        this.editor.resize()
+      }
+    },
+    changedSchema (schemaName) {
+      this.filterSavedQueriesBySchema(schemaName)
+      bus.setLastRunQuery(null)
+    },
+    filterSavedQueriesBySchema (schema) {
+      this.filteredQueries = this.queries.filter(q => q.schema == schema)
     },
     openQuery () {
       bus.$emit('openQuery')
@@ -92,13 +114,16 @@ export default {
       this.clicked = !this.clicked;
     },
     runSavedQuery (query) {
-      alert(query)
+      this.executeQuery(query)
     },
     deleteSavedQuery (name) {
-      alert(name)
+      this.queries = this.queries.filter(q => q.name !== name)
+      storage.setItem('queries', JSON.stringify(this.queries))
+      this.filterSavedQueriesBySchema(bus.currentSchema)
     }
   },
   mounted () {
+    this.height = document.getElementById('query-pane').clientHeight
     this.editor = ace.edit("editor")
     // this.editor.setAutoScrollEditorIntoView(true)
     // this.editor.completers = [completer]
@@ -112,13 +137,8 @@ export default {
     this.editor.commands.addCommand({
       name: 'runQuery',
       bindKey: {win: 'Ctrl-Enter', mac: 'Command-Enter'},
-      exec: this.executeQuery
+      exec: this.runQuery
     })
-
-    // set up resize-watcher.
-    const target = document.getElementById('query-pane')
-    this.observer = new MutationObserver(() => this.editor.resize());
-    this.observer.observe(target, {attributes: true});
   },
   beforeDestroy () {
     this.editor.destroy()
@@ -126,7 +146,10 @@ export default {
     this.observer.disconnect();
   },
   created () {
-    this.queries = JSON.parse(storage.getItem('queries')).filter(q => q.schema === bus.currentSchema) || []
+    bus.$on('changedSchema', (schemaName) =>{
+      this.changedSchema(schemaName)
+    });
+    this.queries = JSON.parse(storage.getItem('queries')) || []
   }
 }
 </script>
@@ -136,17 +159,17 @@ export default {
     margin: 0;
     font-style: italic;
   }
-  .queryContent {
+  .query-pane {
       display: flex;
       flex-direction: column;
   }
   .editor {
     width: calc(100% - var(--curve-size));
-    height: calc(100% - 3em);
+    height: calc(100% - 4em);
     resize: none;
     position: static;
-    flex: 1;
-    display: flex;
+    /*flex: 1;
+    display: flex;*/
   }
   #editor {
     position: relative;
@@ -163,10 +186,14 @@ export default {
     z-index: 5;
   }
 
+  .queriesDropdown{
+    margin: 0;
+  }
+
   .savedQueriesList{
     display: block;
-    z-index: 5;
-    top: 100%;
+    top: 33%;
+    left: 9.5%;
     position: relative;
   }
 
@@ -177,9 +204,31 @@ export default {
   .deleteSavedQueryIcon{
     margin-left: 10px;
     color: red;
+    margin-right: 5px;
   }
 
   .runSavedQueryIcon:hover, .deleteSavedQueryIcon:hover{
     cursor: pointer;
+  }
+
+  .button-group {
+    flex-direction: row-reverse;
+    display: flex;
+    align-content: space-between;
+    flex: 1;
+  }
+
+  .button-group button, .button-group select {
+    margin: 5px;
+    flex-basis: auto;
+  }
+
+  .queryListElement{
+    list-style-type: none;
+    padding: 0;
+    padding: 10px;
+    margin: 0;
+    background-color: #E6E6E6;
+    border-bottom: 1px grey solid;
   }
 </style>
