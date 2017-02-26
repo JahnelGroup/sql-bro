@@ -2,7 +2,7 @@
     <header>
       <div>💪SQL bro</div>
       <button class="pure-button" v-if="connection" @click="disconnect">
-        <i class="fa fa-sign-out"></i>Disconnect
+        <i class="fa fa-sign-out"></i> Disconnect
       </button>
     </header>
 </template>

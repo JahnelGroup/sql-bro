@@ -9,8 +9,8 @@
         <connection :connection="connection"
             @deleteConnection="removeConnection($event)"></connection>
       </li>
-      <li><button @click="openConnection">Add Connection</button></li>
     </ul>
+    <button @click="openConnection" class="pure-button"><i class="fa fa-plus"></i> Add Connection</button>
   </div>
 </template>
 
@@ -59,5 +59,15 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+ul {
+  list-style-type: none;
+}
+li {
+  display: inline-block;
+  width: 250px;
+  border: 1px solid black;
+  margin: 5px;
+  border-radius: var(--curve-size);
+}
 </style>

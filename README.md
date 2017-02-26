@@ -39,7 +39,6 @@ architecture: rely more on "events" - especially for flyway?
 high:
 * Flesh out grid component: (exports as right-click); inline editing issuing an "update")
 * Make "multiple" response object into tabs.
-* Beef connection list up visually.
 * Show other "objects" under schemas:  triggers, events? with good icons.
 * Add Tests for days.
 * Add flyway integration?! Show what migration you're on, and if there are others to do: clean/migrate (dev/testing only! No prod!)
@@ -67,6 +66,7 @@ X connection dialog  - make sure the connection *happens* before closing and mov
 X Added "null" to grid output.
 X added SQL, CSV, JSON export to clipboard.
 X Style improvements, resizes grid now.
+X Beef connection list up visually.
 
 ---
 This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about this project can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).

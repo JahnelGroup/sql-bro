@@ -156,4 +156,23 @@
   .results {
     flex: 1;
   }
+
+
+  .Local {
+  color: var(--info);
+  background-color: var(--info-background);
+}
+.Testing {
+  color: var(--warning);
+  background-color: var(--warning-background);
+}
+.Production {
+  color: var(--error);
+  background-color: var(--error-background);
+}
+
+.button-warning {
+  background-color: var(--error);
+  color: white;
+}
 </style>

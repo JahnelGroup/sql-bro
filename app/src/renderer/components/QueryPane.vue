@@ -143,7 +143,6 @@ export default {
   beforeDestroy () {
     this.editor.destroy()
     this.editor.container.remove()
-    this.observer.disconnect();
   },
   created () {
     bus.$on('changedSchema', (schemaName) =>{
