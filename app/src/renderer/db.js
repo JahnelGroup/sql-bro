@@ -1,4 +1,5 @@
 import mysql from 'mysql'
+import {ipcRenderer} from 'electron'
 
 /*
 target API: what does we need?
@@ -72,6 +73,7 @@ function runQuery (query) {
       }
       const runTime = new Date() - startTime
       returnVal.runTime = runTime
+      ipcRenderer.send('logQuery', {timestamp: new Date(), query, runTime});
       resolve(returnVal);
     })
   })

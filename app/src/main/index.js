@@ -1,6 +1,9 @@
+import { app, Menu, BrowserWindow } from 'electron'
+import {ipcMain} from 'electron'
+import {queryLogger, getRecentQueries} from './queryLogger'
 
-
-import { app, Menu, BrowserWindow } from 'electron';
+ipcMain.on('logQuery', queryLogger)
+ipcMain.on('getRecentQueries', getRecentQueries)
 
 let mainWindow;
 const winURL = process.env.NODE_ENV === 'development'

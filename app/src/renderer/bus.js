@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import db from './db'
+import {ipcRenderer} from 'electron'
 
 export default new Vue({
   data: {
@@ -40,6 +41,13 @@ export default new Vue({
     },
     setLastRunQuery (query) {
       this.lastRunQuery = query;
+    },
+    getRecentQueries() {
+      let recentQueries = {
+        queries: ipcRenderer.sendSync('getRecentQueries'),
+        type: 'result-queries'
+      }
+      this.setCurrentResults(recentQueries)
     }
   }
 })

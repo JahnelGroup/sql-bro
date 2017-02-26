@@ -16,6 +16,8 @@
         </button>
         <query-dialog @addQuery="addQuery($event)"></query-dialog>
         <button @click="openQueriesDropdown()" id="menuLink1" class="pure-button">Saved Queries</button>
+        <button @click="showRecentQueries()" class="pure-button">Recent Queries</button>
+
         <div v-show="clicked" class="savedQueriesList">
           <ul class="queriesDropdown">
             <li v-for="q in filteredQueries" class="queryListElement">
@@ -120,6 +122,9 @@ export default {
       this.queries = this.queries.filter(q => q.name !== name)
       storage.setItem('queries', JSON.stringify(this.queries))
       this.filterSavedQueriesBySchema(bus.currentSchema)
+    },
+    showRecentQueries () {
+      bus.getRecentQueries();
     }
   },
   mounted () {

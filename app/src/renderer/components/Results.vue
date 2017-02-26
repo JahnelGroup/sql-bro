@@ -12,13 +12,15 @@ import ResultStatus from './results/ResultStatus'
 import ResultTable from './results/ResultTable'
 import ResultError from './results/ResultError'
 import ResultMultiple from './results/ResultMultiple'
+import ResultQueries from './results/ResultQueries'
 
 export default {
   components: {
     ResultStatus,
     ResultTable,
     ResultError,
-    ResultMultiple
+    ResultMultiple,
+    ResultQueries
   },
   computed: {
     results () {
