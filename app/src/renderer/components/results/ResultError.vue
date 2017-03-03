@@ -1,13 +1,26 @@
 <template lang="html">
-  <div class="error">
+  <div class="error" @mouseover="showMagicalEE" @mouseleave="hideMagicalEE">
       <p><i class="fa fa-times-circle"></i> Error #{{result.error.errno}}</p>
-      <p>“{{ result.error.message }}”</p>
+      <p>“{{ result.error.message }}<span v-show="showEE">. Do you even sql bro?!</span>”</p>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['result']
+  props: ['result'],
+  data: function(){
+    return {
+      showEE : false
+    }
+  },
+  methods: {
+    showMagicalEE () {
+      this.showEE = true
+    },
+    hideMagicalEE () {
+      this.showEE = false
+    }
+  }
 }
 </script>
 
