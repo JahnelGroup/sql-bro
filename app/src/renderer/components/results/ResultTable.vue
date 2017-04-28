@@ -10,7 +10,7 @@
       <thead>
         <tr>
           <td v-for="header in result.headers">{{ header }}</td>
-        <tr>
+        </tr>
       </thead>
       <tbody>
         <tr v-for="row in result.rows">

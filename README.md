@@ -2,6 +2,8 @@
 
 > Do you even?
 
+![alt text](https://media.giphy.com/media/JHIs9ykOOSJ8I/giphy.gif "Come at me, Bro!")
+
 A bare bones SQL client.
 This was built for Jahnel Group’s 2017 War Week, to satisfy my own desire for an SQL client that would make those things I need to do frequently as a mid-tier developer easy - without preventing doing anything else - with a minimal interface. It was also built to learn more about the Electron platform, practice using Vue.js, and try out a new styling framework.
 Built on electron-boilerplate-vue.
