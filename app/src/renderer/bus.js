@@ -15,11 +15,7 @@ export default new Vue({
     setConnection (con) {
       return db.createConnection(con)
         .then(() => {
-          this.currentConnection = {
-            connectionName: con.connectionName,
-            environment: con.environment,
-            user: con.user
-          }
+          this.currentConnection = con
           this.dbConnection = db
         })
     },
@@ -34,9 +30,15 @@ export default new Vue({
     },
     setCurrentSchema(schemaName) {
       this.dbConnection.runQuery(`use ${schemaName};`)
-        .then(this.setCurrentResults)
-        .then(() => this.currentSchema = schemaName)
-        .catch(() => this.currentSchema = null);
+        .then(() => {
+            this.currentSchema = schemaName
+            this.currentConnection.database = schemaName
+            return db.createConnection(this.currentConnection)
+        })
+        .catch(() => {
+          this.currentSchema = null
+          this.currentConnection.database = null
+        });
       this.$emit("changedSchema", schemaName)
     },
     setLastRunQuery (query) {

@@ -1,5 +1,4 @@
-import mysql from 'mysql'
-import {ipcRenderer} from 'electron'
+import { ipcRenderer } from 'electron'
 
 /*
 target API: what does we need?
@@ -18,13 +17,16 @@ export default {
   createConnection
 }
 
+function createConnection (connectionInfo) {
+  connection = connectionInfo
+  return Promise.resolve()
+}
+
 function getSchemas () {
-  return new Promise(function (resolve, reject) {
-    connection.query('SHOW DATABASES', function (error, results) {
-      if (error) reject(error)
-      resolve(results.map(db => db.Database))
-    })
-  })
+  return sendQuery('SHOW DATABASES')
+    .then(({err, results}) => err ?
+        Promise.reject(err) :
+        results.map(db => db.Database));
 }
 
 // SHOW FULL TABLES (tables/views)
@@ -37,67 +39,57 @@ const tableTypes = {
   'FUNCTION': 'function'
 }
 function getObjectsForSchema (schema) {
-  return new Promise(function (resolve, reject) {
-    connection.query(
-      `select routine_name as name, routine_type as type, 'viewProc' as view
-        FROM INFORMATION_SCHEMA.routines
-        WHERE routine_schema = '${schema}'
-        UNION
-        select table_name as name, table_type as type, 'viewTable' as view
-        from information_schema.tables
-        where table_schema = '${schema}'
-        ORDER BY name`,
-      function (error, results) {
-      if (error) reject(error)
-      resolve(results.map(t => ({
-        name: t.name,
-        type: tableTypes[t.type],
-        view: t.view
-      })));
-    })
-  })
+  return sendQuery(`select routine_name as name, routine_type as type, 'viewProc' as view
+          FROM INFORMATION_SCHEMA.routines
+          WHERE routine_schema = '${schema}'
+          UNION
+          select table_name as name, table_type as type, 'viewTable' as view
+          from information_schema.tables
+          where table_schema = '${schema}'
+          ORDER BY name`)
+        .then(({err, results}) => err ?
+            Promise.reject(err) :
+            results.map(t => ({
+              name: t.name,
+              type: tableTypes[t.type],
+              view: t.view
+            })))
 }
 
 function runQuery (query) {
-  return new Promise(function (resolve) {
-    const startTime = new Date()
-    connection.query(query, function (error, results, fields) {
+  return sendQuery(query)
+    .then(({error, results, fields, runTime}) => {
       let returnVal
-      if (error) {
-        returnVal = {
-          type: 'result-error',
-          error
+        if (error) {
+          returnVal = {
+            type: 'result-error',
+            error
+          }
+        } else {
+          returnVal = transformResults(results, fields)
         }
-      } else {
-        returnVal = transformResults(results, fields)
-      }
-      const runTime = new Date() - startTime
-      returnVal.runTime = runTime
-      ipcRenderer.send('logQuery', {timestamp: new Date(), query, runTime});
-      resolve(returnVal);
+        returnVal.runTime = runTime
+        return returnVal
     })
-  })
 }
 
-function createConnection (connectionInfo) {
-  connection = mysql.createConnection({
-    ...connectionInfo,
-    multipleStatements: true,
-    typeCast: function (field, next) {
-      if (field.type == 'DATE') return field.string();
-      return next()
-    }
-  })
-  return new Promise(function (resolve, reject) {
-    connection.connect(function (err) {
-      if (err) {
-        connection = null;
-        reject('Error connecting: ' + err.stack)
-      } else {
-        resolve(connection)
-      }
+function sendQuery (query) {
+  return new Promise(function (resolve) {
+    const startTime = new Date()
+    const id = performance.now()
+
+    ipcRenderer.once('query-result'+id, (event, error, results, fields) => {
+        const runTime = new Date() - startTime
+        ipcRenderer.send('logQuery', {timestamp: new Date(), query, runTime});
+        resolve({
+          error,
+          results,
+          fields,
+          runTime
+        });
     })
-  });
+    ipcRenderer.send('query', connection, id, query)
+  })
 }
 
 /**

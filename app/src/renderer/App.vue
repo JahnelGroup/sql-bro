@@ -85,10 +85,7 @@
     padding: 0;
     height: 100%;
     width: 100%;
-    font-family: 'BlinkMacSystemFont', 'Lucida Grande',
-            'Segoe UI', Ubuntu, Cantarell, sans-serif;
-    font-weight: normal;
-    font-size: 12px;
+    font: menu;
   }
   #app {
     /*max-width: 600px;

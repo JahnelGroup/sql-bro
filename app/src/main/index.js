@@ -1,6 +1,10 @@
 import { app, Menu, BrowserWindow } from 'electron'
-import {ipcMain} from 'electron'
+import { ipcMain } from 'electron'
 import {queryLogger, getRecentQueries} from './queryLogger'
+import db from './db'
+
+// to make import of db ok; to make it run.
+console.log(db);
 
 ipcMain.on('logQuery', queryLogger)
 ipcMain.on('getRecentQueries', getRecentQueries)

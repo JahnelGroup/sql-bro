@@ -32,7 +32,7 @@ npm run lint
 # run webpack in production
 npm run pack
 ```
-More information can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/docs/npm_scripts.html).
+More information can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/en/npm_scripts.html).
 
 ---
 
@@ -40,7 +40,6 @@ More information can be found [here](https://simulatedgreg.gitbooks.io/electron-
 ## TODOS
 
 High:
-* Move SQL driver to node process and fix wepack settings back to default.
 * Flesh out grid component: (exports as right-click); inline editing issuing an "update")
 * Make "multiple" response object into tabs.
 * Show other "objects" under schemas:  triggers, events? with good icons.
@@ -58,6 +57,7 @@ Med:
 * Search option: find column (in all tables/procs)
 * Work on ReadMe. Follow guide below; change what's needed.
 * Sort on column header? (reissue with `SELECT * FROM (query) ORDER BY header`)
+* Find a way to report OS errors back to the UI, such as during the writes to logs
 
 Low:
 * add multiple DB types (sql server, at least. mongO?)
